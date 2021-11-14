@@ -1,16 +1,15 @@
 import React from 'react';
-import Block from './Block'
 
 // each layer component defaults to a block state of 1
 // the block prop will determine how many 
 // Block divs to put inside the layer div
 
-class Layer extends React.Component {
+class Block extends React.Component {
     render() {
-        return <div class = "layer" >
-          <Block/>
+        return <div class = "block" >
+          Climb Name
         </div>
     }
 }
 
-export default Layer;
+export default Block;

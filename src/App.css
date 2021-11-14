@@ -7,5 +7,7 @@
 .layer {
   width: 100%;
   height: 100px;
-  border: solid 1pxred;
+  border: solid 1px red;
+  display: grid;
+  grid-template-rows: auto;
 }
