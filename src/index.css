@@ -41,3 +41,7 @@ code {
   text-align: center;
   align-items: center;
 }
+
+.no-border {
+  border: 0;
+}

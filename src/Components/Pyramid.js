@@ -67,12 +67,12 @@ const data =  [
 class Pyramid extends React.Component {
     render() {
         return <div class = "pyramid" >
-           <Layer name={data.filter(x => x.grade === grade[0]).map(d => d.name)}/>
-           <Layer name={data.filter(x => x.grade === grade[1]).map(d => d.name)}/>
-           <Layer name={data.filter(x => x.grade === grade[2]).map(d => d.name)}/>
-           <Layer name={data.filter(x => x.grade === grade[3]).map(d => d.name)}/>
-           <Layer name={data.filter(x => x.grade === grade[4]).map(d => d.name)}/>
-           <Layer name={data.filter(x => x.grade === grade[5]).map(d => d.name)}/>
+           <Layer grade={grade[0]} name={data.filter(x => x.grade === grade[0]).map(d => d.name)}/>
+           <Layer grade={grade[1]} name={data.filter(x => x.grade === grade[1]).map(d => d.name)}/>
+           <Layer grade={grade[2]} name={data.filter(x => x.grade === grade[2]).map(d => d.name)}/>
+           <Layer grade={grade[3]} name={data.filter(x => x.grade === grade[3]).map(d => d.name)}/>
+           <Layer grade={grade[4]} name={data.filter(x => x.grade === grade[4]).map(d => d.name)}/>
+           <Layer grade={grade[5]} name={data.filter(x => x.grade === grade[5]).map(d => d.name)}/>
         </div>
     }
 }

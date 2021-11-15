@@ -8,7 +8,7 @@ import Block from './Block'
 class Layer extends React.Component {
     render(props) {
         return <div class = "layer" >
-          <Block name={this.props.name} />
+          <Block name={this.props.name} grade={this.props.grade} />
         </div>
     }
 }

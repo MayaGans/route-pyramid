@@ -15,6 +15,7 @@ class Block extends React.Component {
 
       return (
         <div class="blocks">
+          <div class="block no-border">{this.props.grade}</div>
           {renderedOutput}
         </div>
       );
