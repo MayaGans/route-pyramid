@@ -4,11 +4,20 @@ import React from 'react';
 // the block prop will determine how many 
 // Block divs to put inside the layer div
 
+// and we also need to pass down the name of climbs 
+// to the proper block components
+// so itll be a for each climbname create a block 
+
 class Block extends React.Component {
-    render() {
-        return <div class = "block" >
-          Climb Name
+    render(props) {
+
+      var renderedOutput = this.props.name.map(item => <div class="block"> {item} </div>)
+
+      return (
+        <div class="blocks">
+          {renderedOutput}
         </div>
+      );
     }
 }
 

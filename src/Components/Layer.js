@@ -6,9 +6,9 @@ import Block from './Block'
 // Block divs to put inside the layer div
 
 class Layer extends React.Component {
-    render() {
+    render(props) {
         return <div class = "layer" >
-          <Block/>
+          <Block name={this.props.name} />
         </div>
     }
 }
