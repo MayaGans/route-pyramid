@@ -13,15 +13,14 @@ code {
 }
 
 .pyramid {
-  display: grid;
-  grid-column: 1;
+  /* width: 50%; */
 }
 
 .layer {
   width: 100%;
   height: 100px;
-  display: grid;
-  grid-template-rows: auto;
+  /* display: grid; */
+  /* grid-template-rows: auto; */
 }
 
 .blocks {
