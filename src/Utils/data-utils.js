@@ -33,55 +33,52 @@ export function get_grades(top) {
   return climbing_grades.slice(t, t + 6);
 }
 
-// TODO
-// using the raw data we'll need to make extra
-// {name: null, grade: "X"}
-// to fill in the pyramid
-// 1. use a filter to count the number of climbs at each grade
-// 2. if it doesnt match fill with more objects with null names
-// 3. remove any above the max amount of that grade
+export function get_layer(dat, layer_grade, num) {
+  let climbs = dat
+  .filter((x) => x.grade === layer_grade)
+  .map((d) => d.name)
 
-export const data = [
-  { name: null, grade: "13B" },
+  let leftover = num - climbs.length
 
-  { name: null, grade: "13A" },
-  { name: null, grade: "13A" },
+  if (Math.sign(leftover) !== -1) {
+    let nulls = Array(leftover).fill(null) 
+    
+    return climbs.concat(nulls).map((x) => {
+    return { 
+      name: x,
+      grade: layer_grade
+    }
+      
+  })
+    
+  } else {
+    
+  return climbs.slice(0, num).map((x) => {
+    return { 
+      name: x,
+      grade: layer_grade
+    }        
+  })
+}
+}
 
-  { name: "Straight Outta Compton", grade: "12D" },
-  { name: "Jesus Wept", grade: "12D" },
-  { name: null, grade: "12D" },
-  { name: null, grade: "12D" },
+export function make_pyramid(grade, raw_climbs) {
+  
+  let grades = get_grades(grade)
 
-  { name: "Space Lord", grade: "12C" },
-  { name: "Heart Shaped Box", grade: "12C" },
-  { name: "Cell Block Six", grade: "12C" },
-  { name: "Mosaic", grade: "12C" },
-  { name: null, grade: "12C" },
-  { name: null, grade: "12C" },
+  let layer_0 = get_layer(raw_climbs, grades[0], 1)
+  let layer_1 = get_layer(raw_climbs, grades[1], 2)
+  let layer_2 = get_layer(raw_climbs, grades[2], 3)
+  let layer_3 = get_layer(raw_climbs, grades[3], 6)
+  let layer_4 = get_layer(raw_climbs, grades[4], 10)
+  let layer_5 = get_layer(raw_climbs, grades[5], 14)
 
-  { name: "Sliding Down", grade: "12B" },
-  { name: "Batarang", grade: "12B" },
-  { name: "Charro", grade: "12B" },
-  { name: "Bullet the New Sky", grade: "12B" },
-  { name: "Babyface", grade: "12B" },
-  { name: "Far From God", grade: "12B" },
-  { name: "Bullfighter", grade: "12B" },
-  { name: null, grade: "12B" },
-  { name: null, grade: "12B" },
-  { name: null, grade: "12B" },
-
-  { name: "This is the City", grade: "12A" },
-  { name: "Where Egos Dare", grade: "12A" },
-  { name: "Honey Bucket", grade: "12A" },
-  { name: "49", grade: "12A" },
-  { name: "Hot Tamale Baby", grade: "12A" },
-  { name: "Twinkie", grade: "12A" },
-  { name: "Starry", grade: "12A" },
-  { name: "Scneezal", grade: "12A" },
-  { name: "Crumblies", grade: "12A" },
-  { name: "Posse Whipped", grade: "12A" },
-  { name: null, grade: "12A" },
-  { name: null, grade: "12A" },
-  { name: null, grade: "12A" },
-  { name: null, grade: "12A" },
-];
+  return [
+    ...layer_0,
+    ...layer_1,
+    ...layer_2,
+    ...layer_3,
+    ...layer_4,
+    ...layer_5
+  ]
+}
