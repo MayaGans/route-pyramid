@@ -1,30 +1,4 @@
-const climbing_grades = [
-  "14D",
-  "14C",
-  "14B",
-  "14A",
-  "13D",
-  "13C",
-  "13B",
-  "13A",
-  "12D",
-  "12C",
-  "12B",
-  "12A",
-  "11D",
-  "11C",
-  "11B",
-  "11A",
-  "10D",
-  "10C",
-  "10B",
-  "10A",
-  "9",
-  "8",
-  "7",
-  "6",
-  "5",
-];
+export const climbing_grades = ["14D", "14C", "14B", "14A", "13D", "13C", "13B", "13A", "12D", "12C", "12B", "12A", "11D", "11C", "11B", "11A", "10D", "10C", "10B", "10A", "9", "8", "7", "6", "5"]
 
 // given the climbing grade array
 // get the 6 grades needed for the pyramid
@@ -33,13 +7,19 @@ export function get_grades(top) {
   return climbing_grades.slice(t, t + 6);
 }
 
+// get all the climbs from the data of a certain grade
+// and the number of climbs for that layer
+
 export function get_layer(dat, layer_grade, num) {
+  
   let climbs = dat
   .filter((x) => x.grade === layer_grade)
   .map((d) => d.name)
 
+  // are there any leftover numbers to fill
   let leftover = num - climbs.length
 
+  // if so add nulls
   if (Math.sign(leftover) !== -1) {
     let nulls = Array(leftover).fill(null) 
     
@@ -51,6 +31,8 @@ export function get_layer(dat, layer_grade, num) {
       
   })
     
+  // otherwise just used the first numbers in the vector
+  // that will 
   } else {
     
   return climbs.slice(0, num).map((x) => {

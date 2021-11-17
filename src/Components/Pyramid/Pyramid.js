@@ -20,9 +20,13 @@ const Pyramid = () => {
     setData(make_pyramid(grade[0], raw_data))
   }
 
+  let allLayers = grade.map((item, index) => (
+    <Layer grade={item} key={item + "_" + index} name={data.filter((x) => x.grade === item).map((d) => d.name)} />
+  ));
+
   return (
     <div>
-    
+  
     <label htmlFor="grades">Choose a Top Grade</label>
     <select id="grades" name="grades" onBlur={changePyramid}>
     <option value="14D">14D</option>
@@ -48,12 +52,7 @@ const Pyramid = () => {
     </select>
 
     <div className="pyramid">
-    <Layer grade={grade[0]} name={data.filter((x) => x.grade === grade[0]).map((d) => d.name)} />
-    <Layer grade={grade[1]} name={data.filter((x) => x.grade === grade[1]).map((d) => d.name)} />
-    <Layer grade={grade[2]} name={data.filter((x) => x.grade === grade[2]).map((d) => d.name)} />
-    <Layer grade={grade[3]} name={data.filter((x) => x.grade === grade[3]).map((d) => d.name)} />
-    <Layer grade={grade[4]} name={data.filter((x) => x.grade === grade[4]).map((d) => d.name)} />
-    <Layer grade={grade[5]} name={data.filter((x) => x.grade === grade[5]).map((d) => d.name)} />
+      {allLayers}
     </div>
     </div>
   );
