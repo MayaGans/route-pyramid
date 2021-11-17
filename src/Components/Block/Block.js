@@ -1,18 +1,16 @@
 import React from "react";
 
-class Block extends React.Component {
-  render() {
-    var renderedOutput = this.props.name.map((item, index) => (
-      <div className="block" key={item + index}> {item} </div>
-    ));
-
-    return (
-      <div className="blocks">
-        <div className="block no-border">{this.props.grade}</div>
-        {renderedOutput}
-      </div>
-    );
-  }
+const Block = (props) => {
+  return (
+    <div className="blocks">
+      <div className="block no-border">{props.grade}</div>
+      {
+        props.name.map((item, index) => (
+          <div className="block" key={item + index}> {item} </div>
+        ))
+      }
+    </div>
+  );
 }
 
 export default Block;

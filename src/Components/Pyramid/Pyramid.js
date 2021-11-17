@@ -37,6 +37,7 @@ const Pyramid = () => {
         grade.map((item, index) => (
           <Layer 
             grade={item} 
+            // I think this is causing the issue...
             key={item + "_" + index} 
             name={data.filter((x) => x.grade === item).map((d) => d.name)} />
         ))     
