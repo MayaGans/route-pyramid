@@ -1,4 +1,4 @@
-export const CLIMBING_GRADES = ["14D", "14C", "14B", "14A", "13D", "13C", "13B", "13A", "12D", "12C", "12B", "12A", "11D", "11C", "11B", "11A", "10D", "10C", "10B", "10A", "9", "8", "7", "6", "5"]
+export const CLIMBING_GRADES = ["5.14d", "5.14c", "5.14b", "5.14a", "5.13d", "5.13c", "5.13b", "5.13a", "5.12d", "5.12c", "5.12b", "5.12a", "5.11d", "5.11c", "5.11b", "5.11a", "5.10d", "5.10c", "5.10b", "5.10a", "5.9", "5.8", "5.7", "5.6", "5.5"]
 
 // given the climbing grade array
 // get the 6 grades needed for the pyramid
@@ -14,36 +14,45 @@ export function get_layer(dat, layer_grade, num) {
   
   let climbs = dat
   .filter((x) => x.grade === layer_grade)
-  .map((d) => d.name)
+  .map((d) => {
+    return {
+      name: d.name,
+      grade: d.grade,
+      date: d.date,
+      ascent_type: d.ascent_type
+    }
+  })
 
   // are there any leftover numbers to fill
   let leftover = num - climbs.length
 
   // if so add nulls
   if (Math.sign(leftover) !== -1) {
-    let nulls = Array(leftover).fill(null) 
-    
-    return climbs.concat(nulls).map((x) => {
-    return { 
-      name: x,
-      grade: layer_grade
-    }
-      
-  })
+
+    let nulls = Array(leftover).fill({
+      name: null,
+      grade: layer_grade, 
+      date: null,
+      ascent_type: null
+    }) 
+    return [...climbs, ...nulls] 
     
   // otherwise just used the first numbers in the vector
   // that will 
   } else {
     
-  return climbs.slice(0, num).map((x) => {
+  return climbs.slice(0, num).map((d) => {
     return { 
-      name: x,
-      grade: layer_grade
+      name: d.name,
+      grade: d.grade,
+      date: d.date,
+      ascent_type: d.ascent_type
     }        
   })
 }
 }
 
+// this should always output an array of length 36
 export function make_pyramid(grade, raw_climbs) {
   
   let grades = get_grades(grade)
