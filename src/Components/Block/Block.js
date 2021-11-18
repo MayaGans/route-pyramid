@@ -6,7 +6,7 @@ const Block = (props) => {
       <div className="block no-border">{props.grade}</div>
       {
         props.name.map((item, index) => (
-          <div className="block" key={item + index}> {item} </div>
+          <div className="block" key={item + index}> {item}</div>
         ))
       }
     </div>

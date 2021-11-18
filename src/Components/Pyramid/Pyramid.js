@@ -18,16 +18,19 @@ const Pyramid = () => {
   const [data, setData] = useState([])
   const [pyramid, setPyramid] = useState(make_pyramid(selectedOption, data))
 
+  // by making the array empty we're saying only grab the data once!
   useEffect(() => {
     requestData()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // grab the data from google
   const requestData = async () => {
     try {
       await doc.useServiceAccountAuth({
         client_email: CLIENT_EMAIL,
         private_key: PRIVATE_KEY,
       });
+
       // loads document properties and worksheets
       await doc.loadInfo();
   
@@ -45,7 +48,6 @@ const Pyramid = () => {
     setSelectedOption(e.target.value)
     setGrade(get_grades(e.target.value))
     setPyramid(make_pyramid(selectedOption, data))
-    console.log(pyramid)
   }
 
   return (
@@ -72,7 +74,8 @@ const Pyramid = () => {
           <Layer 
             grade={item} 
             key={item + "_" + index}
-            name={pyramid.filter((x) => x.grade === item).map((d) => d.name)} />
+            name={pyramid.filter((x) => x.grade === item).map((d) => d.name)}
+            date={pyramid.filter((x) => x.grade === item).map((d) => d.date)} />
         ))     
       }
     </div>
