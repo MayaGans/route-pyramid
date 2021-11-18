@@ -1,3 +1,5 @@
+import './Block.css'
+
 const Block = (props) => {
   return (
     <div className="blocks">

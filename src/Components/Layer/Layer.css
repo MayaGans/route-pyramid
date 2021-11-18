@@ -1,1 +1,8 @@
 /* put css from app.css here */
+
+.layer {
+  width: 100%;
+  height: 100px;
+  /* display: grid; */
+  /* grid-template-rows: auto; */
+}
