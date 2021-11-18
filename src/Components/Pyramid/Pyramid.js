@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState } from "react";
 import Layer from "../Layer/Layer";
 import { raw_data } from "../../Utils/data"
 import { make_pyramid, get_grades, CLIMBING_GRADES } from "../../Utils/data-utils";
@@ -8,6 +8,32 @@ const Pyramid = () => {
   const [grade, setGrade] = useState(get_grades("13B"))
   const [data, setData] = useState(make_pyramid(grade[0], raw_data))
   const [selectedOption, setSelectedOption] = useState("13B")
+
+  /*
+   we can use this to call from the google api
+   and eventually we should store this in a database 
+   and be able to upload new data 
+   but that's too backend-y for now
+  useEffect(() => {
+    requestData()
+    // this square bracket only runs the API once
+    // if we left it blank it would run every render!
+    // if we put something in the bracket
+    // that will determine when it will call again
+    // we can do this on the submission of a button
+    // this is how we'll get data from google or whatever
+  }, [])
+
+  async function requestData() {
+    const res = await fetch(
+      `googlestring${textinput}`
+    )
+
+    const json = await res.json()
+    setData(json.TODO)
+
+  }
+  */
 
   function changePyramid(e) {
     setSelectedOption(e.target.value)
