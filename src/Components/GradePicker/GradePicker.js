@@ -29,9 +29,13 @@ export default function useGradeList(climb) {
       setStatus('loading')
   
       let res = ''
-      climb === 'Boulder' ? res = BOULDER_GRADES : res = ROUTE_GRADES
+      if (climb === 'Boulder') {
+        res = BOULDER_GRADES
+      } else {
+        res = ROUTE_GRADES
+      }
   
-      localCache[climb] = res || []
+      localCache[climb] = res
       setGradeList(localCache[climb])
       setStatus('loaded')
     }

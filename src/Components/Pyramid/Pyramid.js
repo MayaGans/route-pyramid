@@ -13,19 +13,17 @@ const PRIVATE_KEY = process.private_key;
 const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
 const Pyramid = () => {
-  
+
+
+  const [climb, setClimb] = useState('Route')
+  const [gradeList] = useGradeList(climb)
+
   const [selectedOption, setSelectedOption] = useState("5.13b")
-  const [grade, setGrade] = useState(get_grades(selectedOption))
+  const [grade, setGrade] = useState(get_grades(selectedOption, gradeList))
   const [data, setData] = useState([])
-
-  // these are really needed 
-  // once we make the gradelist conditional on 
-  // boulder or routes
-  // const [climb, setClimb] = useState('Route')
-  const [gradeList] = useGradeList('Route')
-
+  
   const [pyramid, setPyramid] = useState(make_pyramid(selectedOption, data, gradeList))
-
+  
   // by making the array empty we're saying only grab the data once
   // but this should eventually be dependent on the submit button
   // in the form/write component... is that possible to pass state from that to here?
@@ -57,7 +55,7 @@ const Pyramid = () => {
 
   function changePyramid(e) {
     setSelectedOption(e.target.value)
-    setGrade(get_grades(e.target.value))
+    setGrade(get_grades(e.target.value, gradeList))
     setPyramid(make_pyramid(selectedOption, data, gradeList))
   }
 
@@ -69,6 +67,7 @@ const Pyramid = () => {
     {/*  
     this select is for Route or Boulder
     and will automatically change the gradeList select
+    */}
     <select
       id="climb"
       name="climb"
@@ -80,7 +79,6 @@ const Pyramid = () => {
     <option></option> 
     </select>
 
-    */}
     <select 
       id="grades" 
       name="grades" 
@@ -89,6 +87,7 @@ const Pyramid = () => {
       onBlur={changePyramid} 
       onChange={changePyramid}
     > 
+    <option></option>
       {
         gradeList.map(grade => (
           <option value={grade} key={grade}>{grade}</option>

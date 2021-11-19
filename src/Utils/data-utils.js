@@ -16,9 +16,9 @@ export const BOULDER_GRADES = [
 
 // given the climbing grade array
 // get the 6 grades needed for the pyramid
-export function get_grades(top) {
-  let t = ROUTE_GRADES.indexOf(top);
-  return ROUTE_GRADES.slice(t, t + 6);
+export function get_grades(top, allGrades) {
+  let t = allGrades.indexOf(top);
+  return allGrades.slice(t, t + 6);
 }
 
 // get all the climbs from the data of a certain grade
@@ -67,9 +67,9 @@ export function get_layer(dat, layer_grade, num) {
 }
 
 // this should always output an array of length 36
-export function make_pyramid(grade, raw_climbs) {
+export function make_pyramid(grade, raw_climbs, gradeList) {
   
-  let grades = get_grades(grade)
+  let grades = get_grades(grade, gradeList)
 
   let layer_0 = get_layer(raw_climbs, grades[0], 1)
   let layer_1 = get_layer(raw_climbs, grades[1], 2)
