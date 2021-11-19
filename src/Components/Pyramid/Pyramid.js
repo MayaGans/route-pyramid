@@ -38,6 +38,7 @@ const Pyramid = () => {
       const rows = await sheet.getRows();
 
       setData(rows)
+      setPyramid(make_pyramid(selectedOption, data))
   
     } catch (e) {
       console.error('Error: ', e);
@@ -60,7 +61,8 @@ const Pyramid = () => {
       value={selectedOption}
       // why doesn't this work but onChange does? 
       onBlur={changePyramid} 
-      onChange={changePyramid}> 
+      onChange={changePyramid}
+    > 
       {
         CLIMBING_GRADES.map(grade => (
           <option value={grade} key={grade}>{grade}</option>
