@@ -1,4 +1,4 @@
-export const CLIMBING_GRADES = [
+export const ROUTE_GRADES = [
   "5.14d", "5.14c", "5.14b", "5.14a", 
   "5.13d", "5.13c", "5.13b", "5.13a", 
   "5.12d", "5.12c", "5.12b", "5.12a", 
@@ -7,11 +7,18 @@ export const CLIMBING_GRADES = [
   "5.9", "5.8", "5.7", "5.6", "5.5"
 ]
 
+export const BOULDER_GRADES = [
+  "v1", "v2", "v3", "v4", "v5",
+  "v6", "v7", "v8", "v9", "v10",
+  "v11", "v12", "v13", "v14", "v15",
+  "v16", "v17"
+]
+
 // given the climbing grade array
 // get the 6 grades needed for the pyramid
 export function get_grades(top) {
-  let t = CLIMBING_GRADES.indexOf(top);
-  return CLIMBING_GRADES.slice(t, t + 6);
+  let t = ROUTE_GRADES.indexOf(top);
+  return ROUTE_GRADES.slice(t, t + 6);
 }
 
 // get all the climbs from the data of a certain grade

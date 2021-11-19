@@ -33,15 +33,23 @@ const Write = () => {
     }
   };
 
-  const newRow = { 
-    name: climbName,
-    grade: climbGrade,
-    date: climbDate,
-    ascent_type: climbAscentType
-  };
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    appendSpreadsheet(
+      {
+      date: climbDate,
+      name: climbName,
+      ascent_type: climbAscentType,
+      grade: climbGrade,
+      location: null,
+      country: null,
+      attempts: null
+      }
+    )
+}
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
 
       { 
       /*
@@ -70,7 +78,7 @@ const Write = () => {
       <input id="climbAscentType" value={climbAscentType} type="text" onChange={(e) => setClimbAscentType(e.target.value)}/>
       
       { /* you can only submit if all sections are filled */}
-      <button onClick={appendSpreadsheet(newRow)}>Submit</button>
+      <input type="submit" value="Submit" />
     </form>
   );
 
