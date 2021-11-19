@@ -62,12 +62,9 @@ const Pyramid = () => {
   return (
     <div>
   
+    <form>
     <label htmlFor="grades">Choose a Top Grade</label>
 
-    {/*  
-    this select is for Route or Boulder
-    and will automatically change the gradeList select
-    */}
     <select
       id="climb"
       name="climb"
@@ -94,8 +91,9 @@ const Pyramid = () => {
         ))
       }
     </select>
+    </form>
 
-   {/* Everything above this should be in the sidebar component! */}
+   {/* This form should be in the sidebar component */}
 
     <div className="pyramid">
       {
@@ -104,7 +102,8 @@ const Pyramid = () => {
             grade={item} 
             key={item + "_" + index}
             name={pyramid.filter((x) => x.grade === item).map((d) => d.name)}
-            date={pyramid.filter((x) => x.grade === item).map((d) => d.date)} />
+            date={pyramid.filter((x) => x.grade === item).map((d) => d.date)} 
+            ascent_type={pyramid.filter((x) => x.grade === item).map((d) => d.ascent_type)}/>
         ))     
       }
     </div>
