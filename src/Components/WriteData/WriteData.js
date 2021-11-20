@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { useState } from 'react'
-import { process } from '../Pyramid/config'
+import { process } from '../Sidebar/config'
 
 // Config variables
 const SPREADSHEET_ID = process.spreadsheet_id
@@ -9,7 +9,7 @@ const PRIVATE_KEY = process.private_key;
 
 const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
-const Write = () => {
+const WriteData = () => {
 
   const [climbName, setClimbName] = useState([])
   const [climbGrade, setClimbGrade] = useState([])
@@ -84,4 +84,4 @@ const Write = () => {
 
 }
 
-export default Write;
+export default WriteData;
