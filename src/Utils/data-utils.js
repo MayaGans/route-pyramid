@@ -17,6 +17,7 @@ export const BOULDER_GRADES = [
 // given the climbing grade array
 // get the 6 grades needed for the pyramid
 export function get_grades(top, allGrades) {
+  console.log(allGrades)
   let t = allGrades.indexOf(top);
   return allGrades.slice(t, t + 6);
 }

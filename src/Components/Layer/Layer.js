@@ -1,4 +1,5 @@
 import Block from "../Block/Block";
+import "./Layer.css"
 
 const Layer = ({
   name,

@@ -1,11 +1,13 @@
-import Pyramid from "./Components/Pyramid/Pyramid";
-import Write from "./Components/WriteData/Write"
+import SideBar from "./Components/Sidebar/Sidebar";
+import WriteData from "./Components/WriteData/WriteData"
+import Fab from "./Components/Fab/Fab"
 
 function App() {
   return (
     <div className="App">
-      <Pyramid />
-      <Write/>
+      <Fab/>
+      <SideBar/>
+      <WriteData/>
     </div>
   );
 }
