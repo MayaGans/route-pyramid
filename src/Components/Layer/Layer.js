@@ -1,9 +1,17 @@
 import Block from "../Block/Block";
 
-const Layer = (props) => {
+const Layer = ({
+  name,
+  grade,
+  date
+}) => {
   return (
     <div className="layer">
-      <Block name={props.name} grade={props.grade} />
+      <Block 
+        name={name} 
+        grade={grade} 
+        date={date}
+      />
     </div>
   );
 }

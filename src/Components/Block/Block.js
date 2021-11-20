@@ -1,12 +1,20 @@
 import './Block.css'
 
-const Block = (props) => {
+const Block = ({
+  grade,
+  name,
+  // date
+  // ascent_type -- use for css?
+}) => {
   return (
     <div className="blocks">
-      <div className="block no-border">{props.grade}</div>
+      <div className="block no-border">{grade}</div>
       {
-        props.name.map((item, index) => (
-          <div className="block" key={item + index}> {item} </div>
+        name.map((item, index) => (
+          <div className="block" key={item + index}>
+            {item} 
+            {/* <br/> {date[index]} */}
+          </div>
         ))
       }
     </div>
