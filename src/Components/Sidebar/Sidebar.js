@@ -27,6 +27,9 @@ const SideBar = () => {
 
   useEffect(() => {
     setPyramid(make_pyramid(selectedOption, data, gradeList))
+    // We want to re-run the pyramid function 
+    // whenever the objects in the array below change
+    // eventually all the filters in the sidebar will need to go here
   }, [selectedOption, data]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // grab the data from google
@@ -44,6 +47,9 @@ const SideBar = () => {
       const rows = await sheet.getRows();
 
       setData(rows)
+      // need to instantiate the app with rows
+      // data doesn't exist yet despite being called in the prior line
+      // because async'd
       setPyramid(make_pyramid(selectedOption, rows, gradeList))
   
     } catch (e) {
@@ -66,7 +72,7 @@ const SideBar = () => {
       defaultValue={climb}
       id="climb"
       name="climb"
-      //onChange={(e) => { setClimb(e.target.value)}}
+      onChange={(e) => { setClimb(e.target.value)}}
       onBlur={(e) => { setClimb(e.target.value)}}
     >Climb
     <option value="Boulder">Boulder</option>
