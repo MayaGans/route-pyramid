@@ -25,6 +25,10 @@ const SideBar = () => {
     requestData()
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    setPyramid(make_pyramid(selectedOption, data, gradeList))
+  }, [selectedOption, data, gradeList, grade])
+
   // grab the data from google
   const requestData = async () => {
     try {
@@ -50,9 +54,6 @@ const SideBar = () => {
   function changePyramid(e) {
     setSelectedOption(e.target.value)
     setGrade(get_grades(e.target.value, gradeList))
-    setPyramid(make_pyramid(selectedOption, data, gradeList))
-    // why is this one behind?!
-    console.log(pyramid)
   }
 
   return(
@@ -65,7 +66,7 @@ const SideBar = () => {
       defaultValue={climb}
       id="climb"
       name="climb"
-      onChange={(e) => { setClimb(e.target.value)}}
+      //onChange={(e) => { setClimb(e.target.value)}}
       onBlur={(e) => { setClimb(e.target.value)}}
     >Climb
     <option value="Boulder">Boulder</option>
