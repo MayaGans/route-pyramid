@@ -4,23 +4,36 @@ const Block = ({
   grade,
   name,
   // total
-  leftover
+  leftover,
   // date
   // ascent_type -- use for css?
+  isLast,
+  count
 }) => {
-
-  // const counts = [0,2,3,6,10,14]
 
   return (
     <div className="blocks">
       <div className="block no-border">{grade}</div>
       {
-        // after the last block we want to add the count of that layer
-        name.map((item, index) => (
-          <div className="block" key={item + index}>{item}</div>
-        ))
+
+        name.map((item, index) => {
+            return(<div className='block' key={item + index}>{item}</div>)
+        })
+
       }
-      <div className="block no-border leftover">{leftover === 0 ? null : "+" + leftover}</div>
+      {
+        name.map((item, index) => {
+          if (isLast[index]) {
+            return(
+            <div key={index} className="additional-info">
+            <div className="count">{count}</div>
+            <div className="leftover">{leftover === 0 ? null : "+" + leftover}</div>
+            </div>
+            )
+          }
+        })
+      }
+
     </div>
   );
 }

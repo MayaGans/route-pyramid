@@ -6,7 +6,9 @@ const Layer = ({
   grade,
   date,
   total,
-  leftover
+  leftover,
+  isLast,
+  count
 }) => {
 
   return (
@@ -17,6 +19,8 @@ const Layer = ({
         date={date}
         total={total}
         leftover={leftover}
+        count={count}
+        isLast={isLast}
       />
     </div>
   );

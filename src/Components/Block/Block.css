@@ -24,5 +24,13 @@
 }
 
 .leftover {
-  font-size: 1.5em;
+  position: relative;
+  bottom: 0;
+}
+
+.additional-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  padding: 3px 0;
 }
