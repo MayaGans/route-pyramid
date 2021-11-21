@@ -20,9 +20,12 @@ const SideBar = () => {
   const [selectedOption, setSelectedOption] = useState("5.13c")
   const [grade, setGrade] = useState(get_grades(selectedOption, gradeList))
   const [data, setData] = useState([])
-  // TODO
-  // default to this year Jan 1 to today
-  const [date, setDate] = useState([])
+  
+  // this should be Jan 1 of current year
+  const [startDate, setStartDate] = useState([])
+  // this should be set to today
+  const [endDate, setEndDate] = useState([])
+
   const [angle, setAngle] = useState("all")
   const [style, setStyle] = useState("all")
   const [pyramid, setPyramid] = useState([])
@@ -78,9 +81,11 @@ const SideBar = () => {
   }
 
   return(
-    <div>
+    <div className="content">
   
-    <form>
+     <div className="control-panel">
+     <form>
+    
     <label htmlFor="climb">Style</label>
     <select
       defaultValue={climb}
@@ -110,16 +115,11 @@ const SideBar = () => {
       }
     </select>
 
-    <label htmlFor="date">Date Range</label>
-    <select
-        id="date" 
-        name="date" 
-        value={date}
-        onBlur={(e) => setDate(e.target.value)}
-        onChange={(e) => setDate(e.target.value)}
-    >
-    <option></option>
-    </select>
+    <label htmlFor="start-date">Start Date</label>
+    <input value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date" id="start-date" name="start-date"></input>
+
+    <label htmlFor="end-date">End Date</label>
+    <input value={endDate} onChange={(e) => setEndDate(e.target.value)} type="date" id="end-date" name="end-date"></input>
 
     <label htmlFor="style">Style</label>
     <select 
@@ -154,7 +154,8 @@ const SideBar = () => {
     </select>
 
     </form>
-
+    </div>
+  
     <Pyramid grade={grade} pyramid={pyramid} total={total} leftover={leftover}/>
     </div>
   );

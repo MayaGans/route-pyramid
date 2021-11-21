@@ -1,1 +1,30 @@
 /* inspo https://codepen.io/andiio/pen/tFECp */
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+}
+
+.control-panel {
+  height: 100vh;
+  background-color: #f8f8f8;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  margin-bottom: 20px;
+}
+
+select {
+  display: block;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 0.75em;
+}
