@@ -4,14 +4,19 @@ import "./Layer.css"
 const Layer = ({
   name,
   grade,
-  date
+  date,
+  total,
+  leftover
 }) => {
+
   return (
     <div className="layer">
       <Block 
         name={name} 
         grade={grade} 
         date={date}
+        total={total}
+        leftover={leftover}
       />
     </div>
   );

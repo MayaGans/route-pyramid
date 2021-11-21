@@ -2,7 +2,9 @@ import Layer from "../Layer/Layer"
 
 const Pyramid = ({
   grade,
-  pyramid
+  pyramid,
+  total,
+  leftover
 }) => {
 
   return (
@@ -14,7 +16,9 @@ const Pyramid = ({
             key={item + "_" + index}
             name={pyramid.filter((x) => x.grade === item).map((d) => d.name)}
             date={pyramid.filter((x) => x.grade === item).map((d) => d.date)} 
-            ascent_type={pyramid.filter((x) => x.grade === item).map((d) => d.ascent_type)}/>
+            ascent_type={pyramid.filter((x) => x.grade === item).map((d) => d.ascent_type)}
+            total={total[index]}
+            leftover={leftover[index]}/>
         ))     
       }
     </div>
