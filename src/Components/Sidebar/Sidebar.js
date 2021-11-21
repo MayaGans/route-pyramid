@@ -37,8 +37,16 @@ const SideBar = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    setPyramid(make_pyramid(selectedOption, data, gradeList, style, angle))
-  }, [selectedOption, data, style, angle]) // eslint-disable-line react-hooks/exhaustive-deps
+    setPyramid(make_pyramid(
+      selectedOption, 
+      data, 
+      gradeList, 
+      style, 
+      angle, 
+      // startDate, 
+      // endDate
+     ))
+  }, [selectedOption, data, style, angle, startDate, endDate]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setTotal(get_totals(data, grade, style, angle))
