@@ -14,27 +14,13 @@ const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
 const SideBar = () => {
 
-  // climb type
   const [climb, setClimb] = useState('Route')
-  
-  // this is either 5 scale or vscale
-  // based on climb
   const [gradeList] = useGradeList(climb)
-
-  // this is the selected top grade
   const [selectedOption, setSelectedOption] = useState("5.13b")
-
-  // this is the vector of pyramid grades based on the top and gradelist
   const [grade, setGrade] = useState(get_grades(selectedOption, gradeList))
-  // why does this error??? console.log(grade)
-
   const [data, setData] = useState([])
-  
   const [pyramid, setPyramid] = useState(make_pyramid(selectedOption, data, gradeList))
 
-  // by making the array empty we're saying only grab the data once
-  // but this should eventually be dependent on the submit button
-  // in the form/write component... is that possible to pass state from that to here?
   useEffect(() => {
     requestData()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
@@ -52,9 +38,12 @@ const SideBar = () => {
   
       const sheet = doc.sheetsByIndex[0];
       const rows = await sheet.getRows();
+      console.log(rows)
 
       setData(rows)
-      setPyramid(make_pyramid(selectedOption, data))
+      // this isn't working because data is still empty at this point
+      // need to figure out async functions... 
+      setPyramid(make_pyramid(selectedOption, data, gradeList))
   
     } catch (e) {
       console.error('Error: ', e);

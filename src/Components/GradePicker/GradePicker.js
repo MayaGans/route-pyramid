@@ -12,7 +12,7 @@ const localCache = {};
 
 export default function useGradeList(climb) {
   
-  const [gradeList, setGradeList] = useState([])
+  const [gradeList, setGradeList] = useState(ROUTE_GRADES)
   const [status, setStatus] = useState('unloaded')
 
   useEffect(() => {
