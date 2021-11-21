@@ -16,14 +16,14 @@ const SideBar = () => {
 
   const [climb, setClimb] = useState('Route')
   const [gradeList] = useGradeList(climb)
-  const [selectedOption, setSelectedOption] = useState("5.13b")
+  const [selectedOption, setSelectedOption] = useState("5.13c")
   const [grade, setGrade] = useState(get_grades(selectedOption, gradeList))
   const [data, setData] = useState([])
   const [pyramid, setPyramid] = useState(make_pyramid(selectedOption, data, gradeList))
 
   useEffect(() => {
     requestData()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // grab the data from google
   const requestData = async () => {
@@ -38,12 +38,9 @@ const SideBar = () => {
   
       const sheet = doc.sheetsByIndex[0];
       const rows = await sheet.getRows();
-      console.log(rows)
 
       setData(rows)
-      // this isn't working because data is still empty at this point
-      // need to figure out async functions... 
-      setPyramid(make_pyramid(selectedOption, data, gradeList))
+      setPyramid(make_pyramid(selectedOption, rows, gradeList))
   
     } catch (e) {
       console.error('Error: ', e);
@@ -54,6 +51,8 @@ const SideBar = () => {
     setSelectedOption(e.target.value)
     setGrade(get_grades(e.target.value, gradeList))
     setPyramid(make_pyramid(selectedOption, data, gradeList))
+    // why is this one behind?!
+    console.log(pyramid)
   }
 
   return(
@@ -78,10 +77,9 @@ const SideBar = () => {
       id="grades" 
       name="grades" 
       value={selectedOption}
-      // why doesn't this work but onChange does? 
-      onBlur={changePyramid} 
+      onBlur={changePyramid}
       onChange={changePyramid}
-    > 
+    >
     <option></option>
       {
         gradeList.map(grade => (
