@@ -27,7 +27,7 @@ const SideBar = () => {
 
   useEffect(() => {
     setPyramid(make_pyramid(selectedOption, data, gradeList))
-  }, [selectedOption, data, gradeList, grade])
+  }, [selectedOption, data]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // grab the data from google
   const requestData = async () => {
