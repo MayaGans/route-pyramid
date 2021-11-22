@@ -32,6 +32,7 @@ const SideBar = () => {
   const [pyramid, setPyramid] = useState([])
   const [total, setTotal] = useState([])
   const [leftover, setLeftover] = useState([])
+  //const [counts, setCounts] = useState([])
 
   useEffect(() => {
     requestData()
@@ -170,6 +171,16 @@ const SideBar = () => {
         ))
       }
     </select>
+
+    <div className="layer-input">
+    <label htmlFor="layer-input">Block Numbers</label>
+    <input className="layer-count layer-1" type="number" value="1"/>
+    <input className="layer-count layer-2" type="number" value="2"/>
+    <input className="layer-count layer-3" type="number" value="3"/>
+    <input className="layer-count layer-4" type="number" value="6"/>
+    <input className="layer-count layer-5" type="number" value="10"/>
+    <input className="layer-count layer-6" type="number" value="12"/>
+    </div>
 
     </form>
     </div>

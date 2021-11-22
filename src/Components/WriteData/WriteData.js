@@ -15,6 +15,8 @@ const WriteData = () => {
   const [climbGrade, setClimbGrade] = useState([])
   const [climbDate, setClimbDate] = useState([])
   const [climbAscentType, setClimbAscentType] = useState([])
+  const [climbAngle, setClimbAngle] = useState([])
+  const [climbStyle, setClimbStyle] = useState([])
 
   const appendSpreadsheet = async (row) => {
     try {
@@ -25,7 +27,7 @@ const WriteData = () => {
       // loads document properties and worksheets
       await doc.loadInfo();
   
-      const sheet = doc.sheetsByIndex[0];
+      const sheet = doc.sheetsByIndex[1];
       const result = await sheet.addRow(row); // eslint-disable-line no-unused-vars
 
     } catch (e) {
@@ -43,12 +45,15 @@ const WriteData = () => {
       grade: climbGrade,
       location: null,
       country: null,
-      attempts: null
+      attempts: null,
+      angle: climbAngle,
+      style: climbStyle
       }
     )
 }
 
   return (
+    <div className="input-data-form">
     <form onSubmit={handleSubmit}>
 
       { 
@@ -77,9 +82,18 @@ const WriteData = () => {
       <label htmlFor="climbAscentType">Ascent Type</label>
       <input id="climbAscentType" value={climbAscentType} type="text" onChange={(e) => setClimbAscentType(e.target.value)}/>
       
+      { /* Onsight or Redpoint */}
+      <label htmlFor="climbAngle">Angle</label>
+      <input id="climbAscentType" value={climbAngle} type="text" onChange={(e) => setClimbAngle(e.target.value)}/>
+
+      { /* Onsight or Redpoint */}
+      <label htmlFor="climbStyle">Style</label>
+      <input id="climbAscentType" value={climbStyle} type="text" onChange={(e) => setClimbStyle(e.target.value)}/>
+
       { /* you can only submit if all sections are filled */}
       <input type="submit" value="Submit" />
     </form>
+    </div>
   );
 
 }

@@ -32,8 +32,11 @@ export function get_layer(dat, layer_grade, num, climb_style, climb_angle, climb
     let climbs = dat.filter((x) => x.grade === layer_grade).filter(function(x) {
       let startDate = new Date(climb_start)
       let endDate = new Date(climb_end)
-      let date = new Date(x.date)
-      return date >= startDate && date <= endDate
+
+      console.log(x.date === "")
+
+      let date = x.date === "" ? "" : new Date(x.date)
+      return date >= startDate && date <= endDate 
   })
 
     // filter for the climb style and angle if provided

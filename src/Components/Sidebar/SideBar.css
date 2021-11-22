@@ -21,6 +21,35 @@ input {
   margin-bottom: 20px;
 }
 
+.layer-count {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.layer-1 {
+  width: 15%;
+}
+
+.layer-2 {
+  width: 25%;
+}
+
+.layer-3 {
+  width: 40%;
+}
+
+.layer-4 {
+  width: 60%;
+}
+
+.layer-5 {
+  width: 75%;
+}
+
+.layer-6 {
+  width: 90%;
+}
+
 select {
   display: block;
   margin-bottom: 20px;
