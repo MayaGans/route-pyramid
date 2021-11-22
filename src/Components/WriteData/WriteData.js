@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { useState } from 'react'
-import { process } from '../Sidebar/config'
+import { process } from '../SideBar/config'
 
 // Config variables
 const SPREADSHEET_ID = process.spreadsheet_id
