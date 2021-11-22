@@ -5,6 +5,7 @@ import { process } from "./config"
 import useGradeList from "../GradePicker/GradePicker"
 import Pyramid from "../Pyramid/Pyramid"
 import "./SideBar.css"
+import Fab from "../Fab/Fab";
 
 // Config variables
 const SPREADSHEET_ID = process.spreadsheet_id
@@ -33,6 +34,17 @@ const SideBar = () => {
   const [total, setTotal] = useState([])
   const [leftover, setLeftover] = useState([])
 
+  const [l1, setL1] = useState(1)
+  const [l2, setL2] = useState(2)
+  const [l3, setL3] = useState(3)
+  const [l4, setL4] = useState(6)
+  const [l5, setL5] = useState(10)
+  const [l6, setL6] = useState(12)
+
+  const appendData = (dat) => {
+    setData(data.concat(dat))
+  }
+
   useEffect(() => {
     requestData()
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -45,17 +57,18 @@ const SideBar = () => {
       style, 
       angle,
       startDate,
-      endDate
+      endDate,
+      [l1, l2, l3, l4, l5, l6]
      ))
-  }, [selectedOption, data, style, angle, startDate, endDate]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedOption, data, style, angle, startDate, endDate, l1,l2,l3,l4,l5,l6]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    setTotal(get_totals(data, grade, style, angle))
-  }, [data, grade, style, angle])
+    setTotal(get_totals(data, grade, style, angle, startDate, endDate))
+  }, [data, grade, style, angle, startDate, endDate])
 
   useEffect(() => {
-    setLeftover(get_leftovers(total))
-  }, [total]) 
+    setLeftover(get_leftovers(total, [l1,l2,l3,l4,l5,l6]))
+  }, [total,l1,l2,l3,l4,l5,l6]) 
   
 
   // grab the data from google
@@ -72,8 +85,6 @@ const SideBar = () => {
       const sheet = doc.sheetsByIndex[1];
       const rows = await sheet.getRows();
 
-      console.log(rows)
-
       setData(rows)
       setPyramid(make_pyramid(
         selectedOption, 
@@ -82,11 +93,12 @@ const SideBar = () => {
         "all", 
         "all",
         date.getFullYear() + "-01-01",
-        date.toISOString().substring(0, 10)
+        date.toISOString().substring(0, 10),
+        [1,2,3,6,10,12]
       ))
 
-      setTotal(get_totals(rows, grade, "all", "all"))
-      setLeftover(get_leftovers(get_totals(rows, grade, "all", "all")))
+      setTotal(get_totals(rows, grade, "all", "all", "2021-01-01", "2020-01-01"))
+      setLeftover(get_leftovers(get_totals(rows, grade, "all", "all", "2021-01-01", "2020-01-01"), [1,2,3,6,10,12]))
   
     } catch (e) {
       console.error('Error: ', e);
@@ -171,10 +183,21 @@ const SideBar = () => {
       }
     </select>
 
+    <div className="layer-input">
+    <label htmlFor="layer-input">Block Numbers</label>
+    <input className="layer-count layer-1" type="number" value={l1} onChange={(e) => setL1(+e.target.value)} min="1"/>
+    <input className="layer-count layer-2" type="number" value={l2} onChange={(e) => setL2(+e.target.value)} min="1"/>
+    <input className="layer-count layer-3" type="number" value={l3} onChange={(e) => setL3(+e.target.value)} min="1"/>
+    <input className="layer-count layer-4" type="number" value={l4} onChange={(e) => setL4(+e.target.value)} min="1"/>
+    <input className="layer-count layer-5" type="number" value={l5} onChange={(e) => setL5(+e.target.value)} min="1"/>
+    <input className="layer-count layer-6" type="number" value={l6} onChange={(e) => setL6(+e.target.value)} min="1"/>
+    </div>
+
     </form>
     </div>
   
-    <Pyramid grade={grade} pyramid={pyramid} total={total} leftover={leftover}/>
+    <Pyramid grade={grade} pyramid={pyramid} total={total} leftover={leftover} count={[l1,l2,l3,l4,l5,l6]}/>
+    <Fab onClick={appendData}/>
     </div>
   );
 }

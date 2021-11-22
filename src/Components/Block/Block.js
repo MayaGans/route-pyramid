@@ -3,12 +3,10 @@ import './Block.css'
 const Block = ({
   grade,
   name,
-  // total
   leftover,
-  // date
-  // ascent_type -- use for css?
+  date,
   isLast,
-  count
+  //ascent_type, use for css
 }) => {
 
   return (
@@ -17,18 +15,19 @@ const Block = ({
       {
 
         name.map((item, index) => {
-            return(<div className='block' key={item + index}>{item}</div>)
+            return(<div className='block' key={item + index}>
+              <strong>{item}</strong>
+              <span className="block-date">{date[index]}</span>
+              </div>
+              )
         })
 
       }
       {
-        name.map((item, index) => {
-          if (isLast[index]) {
+        isLast.map((item, index) => {
+          if (item) {
             return(
-            <div key={index} className="additional-info">
-            <div className="count">{count}</div>
-            <div className="leftover">{leftover === 0 ? null : "+" + leftover}</div>
-            </div>
+            <div key={`${item}_${index}`} className="leftover">{leftover === 0 ? null : "+" + leftover}</div>
             )
           }
         })

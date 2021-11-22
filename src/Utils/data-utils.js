@@ -32,8 +32,9 @@ export function get_layer(dat, layer_grade, num, climb_style, climb_angle, climb
     let climbs = dat.filter((x) => x.grade === layer_grade).filter(function(x) {
       let startDate = new Date(climb_start)
       let endDate = new Date(climb_end)
-      let date = new Date(x.date)
-      return date >= startDate && date <= endDate
+
+      let date = x.date === "" ? "" : new Date(x.date)
+      return date >= startDate && date <= endDate 
   })
 
     // filter for the climb style and angle if provided
@@ -89,7 +90,7 @@ export function get_layer(dat, layer_grade, num, climb_style, climb_angle, climb
 // give the top grade and climbs create a pyramid vector
 // this will cut of the number of climbs once the number is completed
 // if there arent enough climbs of the grade it will be filled in with nulls
-export function make_pyramid(grade, raw_climbs, gradeList, climb_style, climb_angle, climb_start, climb_end, counts = [1,2,3,6,10,12]) {
+export function make_pyramid(grade, raw_climbs, gradeList, climb_style, climb_angle, climb_start, climb_end, counts) {
   
   let grades = get_grades(grade, gradeList)
 
@@ -122,7 +123,7 @@ export function get_totals(data, grade, climb_style, climb_angle, climb_start, c
   // filter for the climb style and angle if provided
   if (climb_style !== "all") result = result.filter((x) => x.style === climb_style)
   if (climb_angle !== "all") result = result.filter((x) => x.angle === climb_angle)
-    
+
   // turn into a vector of grades
   result = result.map(x => x.grade)
   // count number of unique
@@ -140,8 +141,10 @@ export function get_totals(data, grade, climb_style, climb_angle, climb_start, c
 // get the leftover amounts for each block layer
 // given a vector of counts 
 // which we can change if the block number changes
-export function get_leftovers(total, counts = [1,2,3,6,10,12]) {
+export function get_leftovers(total, counts) {
+
   let remain = total.map((x,i) => x - counts[i])
+
   return remain.map(function(x) {
     if (Math.sign(x) !== -1) {
       return x 
