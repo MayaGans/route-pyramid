@@ -1,11 +1,10 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { useState } from 'react'
-import { process } from '../Sidebar/config'
 
 // Config variables
-const SPREADSHEET_ID = process.spreadsheet_id
-const CLIENT_EMAIL = process.client_email;
-const PRIVATE_KEY = process.private_key;
+const SPREADSHEET_ID = process.env.spreadsheet_id
+const CLIENT_EMAIL = process.env.client_email;
+const PRIVATE_KEY = process.env.private_key;
 
 const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
