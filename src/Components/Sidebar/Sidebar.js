@@ -1,9 +1,10 @@
 import {React, useState, useEffect } from "react";
-import { make_pyramid, get_grades, get_totals, get_leftovers } from "../../Utils/data-utils";
+import { make_pyramid, get_grades, get_totals, get_leftovers, STYLE, ANGLE } from "../../Utils/data-utils";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { process } from "./config"
 import useGradeList from "../GradePicker/GradePicker"
 import Pyramid from "../Pyramid/Pyramid"
+import "./SideBar.css"
 
 // Config variables
 const SPREADSHEET_ID = process.spreadsheet_id
@@ -14,12 +15,21 @@ const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
 const SideBar = () => {
 
+  let date = new Date()
+
   const [climb, setClimb] = useState('Route')
   const [gradeList] = useGradeList(climb)
   const [selectedOption, setSelectedOption] = useState("5.13c")
   const [grade, setGrade] = useState(get_grades(selectedOption, gradeList))
   const [data, setData] = useState([])
-  const [pyramid, setPyramid] = useState(make_pyramid(selectedOption, data, gradeList))
+  
+  // this should be Jan 1 of current year
+  const [startDate, setStartDate] = useState(date.getFullYear() + "-01-01")
+  const [endDate, setEndDate] = useState(date.toISOString().substring(0, 10))
+
+  const [angle, setAngle] = useState("all")
+  const [style, setStyle] = useState("all")
+  const [pyramid, setPyramid] = useState([])
   const [total, setTotal] = useState([])
   const [leftover, setLeftover] = useState([])
 
@@ -28,15 +38,20 @@ const SideBar = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    setPyramid(make_pyramid(selectedOption, data, gradeList))
-    // We want to re-run the pyramid function 
-    // whenever the objects in the array below change
-    // eventually all the filters in the sidebar will need to go here
-  }, [selectedOption, data]) // eslint-disable-line react-hooks/exhaustive-deps
+    setPyramid(make_pyramid(
+      selectedOption, 
+      data, 
+      gradeList, 
+      style, 
+      angle,
+      startDate,
+      endDate
+     ))
+  }, [selectedOption, data, style, angle, startDate, endDate]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    setTotal(get_totals(data, grade))
-  }, [data, grade])
+    setTotal(get_totals(data, grade, style, angle))
+  }, [data, grade, style, angle])
 
   useEffect(() => {
     setLeftover(get_leftovers(total))
@@ -57,13 +72,21 @@ const SideBar = () => {
       const sheet = doc.sheetsByIndex[1];
       const rows = await sheet.getRows();
 
+      console.log(rows)
+
       setData(rows)
-      // need to instantiate the app with rows
-      // data doesn't exist yet despite being called in the prior line
-      // because async'd
-      setPyramid(make_pyramid(selectedOption, rows, gradeList))
-      setTotal(get_totals(rows, grade))
-      setLeftover(get_leftovers(get_totals(rows, grade)))
+      setPyramid(make_pyramid(
+        selectedOption, 
+        rows, 
+        gradeList, 
+        "all", 
+        "all",
+        date.getFullYear() + "-01-01",
+        date.toISOString().substring(0, 10)
+      ))
+
+      setTotal(get_totals(rows, grade, "all", "all"))
+      setLeftover(get_leftovers(get_totals(rows, grade, "all", "all")))
   
     } catch (e) {
       console.error('Error: ', e);
@@ -76,11 +99,12 @@ const SideBar = () => {
   }
 
   return(
-    <div>
+    <div className="content">
   
-    <form>
-    <label htmlFor="grades">Choose a Top Grade</label>
-
+     <div className="control-panel">
+     <form>
+    
+    <label htmlFor="climb">Style</label>
     <select
       defaultValue={climb}
       id="climb"
@@ -93,6 +117,7 @@ const SideBar = () => {
     <option></option> 
     </select>
 
+    <label htmlFor="grades">Top Grade</label>
     <select 
       id="grades" 
       name="grades" 
@@ -107,8 +132,48 @@ const SideBar = () => {
         ))
       }
     </select>
-    </form>
 
+    <label htmlFor="start-date">Start Date</label>
+    <input value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date" id="start-date" name="start-date"></input>
+
+    <label htmlFor="end-date">End Date</label>
+    <input value={endDate} min={startDate} onChange={(e) => setEndDate(e.target.value)} type="date" id="end-date" name="end-date"></input>
+
+    <label htmlFor="style">Style</label>
+    <select 
+      id="style" 
+      name="style" 
+      value={style}
+      onBlur={(e) => setStyle(e.target.value)}
+      onChange={(e) => setStyle(e.target.value)}
+    >
+    <option value="all">All</option>
+      {
+        STYLE.map(grade => (
+          <option value={grade} key={grade}>{grade}</option>
+        ))
+      }
+    </select>
+
+    <label htmlFor="angle">Angle</label>
+    <select 
+      id="angle" 
+      name="angle" 
+      value={angle}
+      onBlur={(e) => setAngle(e.target.value)}
+      onChange={(e) => setAngle(e.target.value)}
+    >
+    <option value="all">All</option>
+      {
+        ANGLE.map(grade => (
+          <option value={grade} key={grade}>{grade}</option>
+        ))
+      }
+    </select>
+
+    </form>
+    </div>
+  
     <Pyramid grade={grade} pyramid={pyramid} total={total} leftover={leftover}/>
     </div>
   );
