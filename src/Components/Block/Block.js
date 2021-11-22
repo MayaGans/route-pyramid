@@ -3,11 +3,10 @@ import './Block.css'
 const Block = ({
   grade,
   name,
-  // total
   leftover,
-  // date
-  // ascent_type -- use for css?
-  isLast
+  date,
+  isLast,
+  //ascent_type, use for css
 }) => {
 
   return (
@@ -16,7 +15,11 @@ const Block = ({
       {
 
         name.map((item, index) => {
-            return(<div className='block' key={item + index}>{item}</div>)
+            return(<div className='block' key={item + index}>
+              <strong>{item}</strong>
+              <span className="block-date">{date[index]}</span>
+              </div>
+              )
         })
 
       }

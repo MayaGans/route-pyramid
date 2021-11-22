@@ -17,8 +17,13 @@
   text-align: center;
   align-items: center;
   font-size: 0.75rem;
+  flex-direction: column;
 }
 
 .no-border {
   border: 0;
+}
+
+.block-date {
+  font-size: 0.6em;
 }
