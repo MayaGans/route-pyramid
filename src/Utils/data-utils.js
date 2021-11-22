@@ -67,16 +67,19 @@ export function get_layer(dat, layer_grade, num) {
 }
 
 // this should always output an array of length 36
-export function make_pyramid(grade, raw_climbs, gradeList) {
+// give the top grade and climbs create a pyramid vector
+// this will cut of the number of climbs once the number is completed
+// if there arent enough climbs of the grade it will be filled in with nulls
+export function make_pyramid(grade, raw_climbs, gradeList, counts = [1,2,3,6,10,12]) {
   
   let grades = get_grades(grade, gradeList)
 
-  let layer_0 = get_layer(raw_climbs, grades[0], 1)
-  let layer_1 = get_layer(raw_climbs, grades[1], 2)
-  let layer_2 = get_layer(raw_climbs, grades[2], 3)
-  let layer_3 = get_layer(raw_climbs, grades[3], 6)
-  let layer_4 = get_layer(raw_climbs, grades[4], 10)
-  let layer_5 = get_layer(raw_climbs, grades[5], 14)
+  let layer_0 = get_layer(raw_climbs, grades[0], counts[0])
+  let layer_1 = get_layer(raw_climbs, grades[1], counts[1])
+  let layer_2 = get_layer(raw_climbs, grades[2], counts[2])
+  let layer_3 = get_layer(raw_climbs, grades[3], counts[3])
+  let layer_4 = get_layer(raw_climbs, grades[4], counts[4])
+  let layer_5 = get_layer(raw_climbs, grades[5], counts[5])
 
   return [
     ...layer_0,
@@ -86,4 +89,35 @@ export function make_pyramid(grade, raw_climbs, gradeList) {
     ...layer_4,
     ...layer_5
   ]
+}
+
+export function get_totals(data, grade) {
+  // filter to only pyramid grades
+  let result = data.filter(item => grade.includes(item.grade))
+  // turn into a vector of grades
+  .map(x => x.grade)
+  // count number of unique
+  .reduce(
+    (acc, val) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+    },
+    Object.fromEntries(grade.map(g => [g, 0]))
+  );
+
+  return Object.values(result)
+}
+
+// get the leftover amounts for each block layer
+// given a vector of counts 
+// which we can change if the block number changes
+export function get_leftovers(total, counts = [1,2,3,6,10,12]) {
+  let remain = total.map((x,i) => x - counts[i])
+  return remain.map(function(x) {
+    if (Math.sign(x) !== -1) {
+      return x 
+    } else {
+      return 0
+    }
+  })
 }

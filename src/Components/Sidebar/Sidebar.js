@@ -1,5 +1,5 @@
 import {React, useState, useEffect } from "react";
-import { make_pyramid, get_grades } from "../../Utils/data-utils";
+import { make_pyramid, get_grades, get_totals, get_leftovers } from "../../Utils/data-utils";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { process } from "./config"
 import useGradeList from "../GradePicker/GradePicker"
@@ -20,6 +20,8 @@ const SideBar = () => {
   const [grade, setGrade] = useState(get_grades(selectedOption, gradeList))
   const [data, setData] = useState([])
   const [pyramid, setPyramid] = useState(make_pyramid(selectedOption, data, gradeList))
+  const [total, setTotal] = useState([])
+  const [leftover, setLeftover] = useState([])
 
   useEffect(() => {
     requestData()
@@ -32,6 +34,15 @@ const SideBar = () => {
     // eventually all the filters in the sidebar will need to go here
   }, [selectedOption, data]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    setTotal(get_totals(data, grade))
+  }, [data, grade])
+
+  useEffect(() => {
+    setLeftover(get_leftovers(total))
+  }, [total]) 
+  
+
   // grab the data from google
   const requestData = async () => {
     try {
@@ -43,7 +54,7 @@ const SideBar = () => {
       // loads document properties and worksheets
       await doc.loadInfo();
   
-      const sheet = doc.sheetsByIndex[0];
+      const sheet = doc.sheetsByIndex[1];
       const rows = await sheet.getRows();
 
       setData(rows)
@@ -51,6 +62,8 @@ const SideBar = () => {
       // data doesn't exist yet despite being called in the prior line
       // because async'd
       setPyramid(make_pyramid(selectedOption, rows, gradeList))
+      setTotal(get_totals(rows, grade))
+      setLeftover(get_leftovers(get_totals(rows, grade)))
   
     } catch (e) {
       console.error('Error: ', e);
@@ -96,7 +109,7 @@ const SideBar = () => {
     </select>
     </form>
 
-    <Pyramid grade={grade} pyramid={pyramid}/>
+    <Pyramid grade={grade} pyramid={pyramid} total={total} leftover={leftover}/>
     </div>
   );
 }
