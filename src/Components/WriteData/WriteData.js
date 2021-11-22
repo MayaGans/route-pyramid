@@ -9,7 +9,7 @@ const PRIVATE_KEY = process.private_key;
 
 const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
-const WriteData = () => {
+const WriteData = ({onClick, onClose}) => {
 
   const [climbName, setClimbName] = useState([])
   const [climbGrade, setClimbGrade] = useState([])
@@ -50,6 +50,9 @@ const WriteData = () => {
       style: climbStyle
       }
     )
+    onClick()
+    // this can only be done if all the fields have first been validated
+    onClose()
 }
 
   return (

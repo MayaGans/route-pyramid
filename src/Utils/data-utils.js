@@ -33,8 +33,6 @@ export function get_layer(dat, layer_grade, num, climb_style, climb_angle, climb
       let startDate = new Date(climb_start)
       let endDate = new Date(climb_end)
 
-      console.log(x.date === "")
-
       let date = x.date === "" ? "" : new Date(x.date)
       return date >= startDate && date <= endDate 
   })
@@ -144,6 +142,7 @@ export function get_totals(data, grade, climb_style, climb_angle, climb_start, c
 // given a vector of counts 
 // which we can change if the block number changes
 export function get_leftovers(total, counts = [1,2,3,6,10,12]) {
+
   let remain = total.map((x,i) => x - counts[i])
   return remain.map(function(x) {
     if (Math.sign(x) !== -1) {
