@@ -15,6 +15,8 @@ const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
 const SideBar = () => {
 
+  let date = new Date()
+
   const [climb, setClimb] = useState('Route')
   const [gradeList] = useGradeList(climb)
   const [selectedOption, setSelectedOption] = useState("5.13c")
@@ -22,9 +24,8 @@ const SideBar = () => {
   const [data, setData] = useState([])
   
   // this should be Jan 1 of current year
-  const [startDate, setStartDate] = useState([])
-  // this should be set to today
-  const [endDate, setEndDate] = useState([])
+  const [startDate, setStartDate] = useState(date.getFullYear() + "-01-01")
+  const [endDate, setEndDate] = useState(date.toISOString().substring(0, 10))
 
   const [angle, setAngle] = useState("all")
   const [style, setStyle] = useState("all")
@@ -42,9 +43,9 @@ const SideBar = () => {
       data, 
       gradeList, 
       style, 
-      angle, 
-      // startDate, 
-      // endDate
+      angle,
+      startDate,
+      endDate
      ))
   }, [selectedOption, data, style, angle, startDate, endDate]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -74,7 +75,16 @@ const SideBar = () => {
       console.log(rows)
 
       setData(rows)
-      setPyramid(make_pyramid(selectedOption, rows, gradeList, "all", "all"))
+      setPyramid(make_pyramid(
+        selectedOption, 
+        rows, 
+        gradeList, 
+        "all", 
+        "all",
+        date.getFullYear() + "-01-01",
+        date.toISOString().substring(0, 10)
+      ))
+
       setTotal(get_totals(rows, grade, "all", "all"))
       setLeftover(get_leftovers(get_totals(rows, grade, "all", "all")))
   
@@ -127,7 +137,7 @@ const SideBar = () => {
     <input value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date" id="start-date" name="start-date"></input>
 
     <label htmlFor="end-date">End Date</label>
-    <input value={endDate} onChange={(e) => setEndDate(e.target.value)} type="date" id="end-date" name="end-date"></input>
+    <input value={endDate} min={startDate} onChange={(e) => setEndDate(e.target.value)} type="date" id="end-date" name="end-date"></input>
 
     <label htmlFor="style">Style</label>
     <select 
