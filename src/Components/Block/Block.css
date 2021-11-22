@@ -22,15 +22,3 @@
 .no-border {
   border: 0;
 }
-
-.leftover {
-  position: relative;
-  bottom: 0;
-}
-
-.additional-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: top;
-  padding: 3px 0;
-}

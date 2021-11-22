@@ -21,13 +21,10 @@ const Block = ({
 
       }
       {
-        name.map((item, index) => {
-          if (isLast[index]) {
-            console.log(item)
+        isLast.map((item, index) => {
+          if (item) {
             return(
-            <div key={index} className="additional-info">
-            <div className="leftover">{leftover === 0 ? null : "+" + leftover}</div>
-            </div>
+            <div key={`${item}_${index}`} className="leftover">{leftover === 0 ? null : "+" + leftover}</div>
             )
           }
         })

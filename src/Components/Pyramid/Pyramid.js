@@ -5,9 +5,8 @@ const Pyramid = ({
   pyramid,
   total,
   leftover,
+  count
 }) => {
-
-  const count=[1,2,3,6,10,12]
 
   return (
     <div className="pyramid">
