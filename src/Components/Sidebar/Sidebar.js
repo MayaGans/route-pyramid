@@ -28,7 +28,6 @@ const SideBar = () => {
   const [startDate, setStartDate] = useState(date.getFullYear() + "-01-01")
   const [endDate, setEndDate] = useState(date.toISOString().substring(0, 10))
 
-
   const [angle, setAngle] = useState("all")
   const [style, setStyle] = useState("all")
   const [pyramid, setPyramid] = useState([])
@@ -42,16 +41,13 @@ const SideBar = () => {
   const [l5, setL5] = useState(10)
   const [l6, setL6] = useState(12)
 
-  const [refresh, setRefresh] = useState([])
-
-  const readData = () => {
-    setRefresh(refresh + 1)
-    console.log(refresh)
+  const appendData = (dat) => {
+    setData(data.concat(dat))
   }
 
   useEffect(() => {
     requestData()
-  }, [refresh]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setPyramid(make_pyramid(
@@ -201,7 +197,7 @@ const SideBar = () => {
     </div>
   
     <Pyramid grade={grade} pyramid={pyramid} total={total} leftover={leftover} count={[l1,l2,l3,l4,l5,l6]}/>
-    <Fab onClick={readData}/>
+    <Fab onClick={appendData}/>
     </div>
   );
 }

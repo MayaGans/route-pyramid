@@ -1,4 +1,5 @@
 import Layer from "../Layer/Layer"
+import "./Pyramid.css"
 
 const Pyramid = ({
   grade,
@@ -9,7 +10,9 @@ const Pyramid = ({
 }) => {
 
   return (
+    <div>
     <div className="pyramid">
+    <h1 className="title">Route Pyramid</h1>
       {
         grade.map((item, index) => (
           <Layer 
@@ -24,6 +27,7 @@ const Pyramid = ({
             isLast={Array(count[index]-1).fill(false).concat(true)}/>
         ))     
       }
+    </div>
     </div>
   );
 }

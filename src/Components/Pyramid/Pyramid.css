@@ -1,1 +1,9 @@
 /* put css from index.css here */
+
+.title {
+  text-align: center;
+}
+
+.pyramid {
+  width: 90%;
+}

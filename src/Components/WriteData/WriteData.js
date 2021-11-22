@@ -50,7 +50,17 @@ const WriteData = ({onClick, onClose}) => {
       style: climbStyle
       }
     )
-    onClick()
+    onClick({
+      date: climbDate,
+      name: climbName,
+      ascent_type: climbAscentType,
+      grade: climbGrade,
+      location: null,
+      country: null,
+      attempts: null,
+      angle: climbAngle,
+      style: climbStyle
+      })
     // this can only be done if all the fields have first been validated
     onClose()
 }
