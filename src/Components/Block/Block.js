@@ -7,8 +7,7 @@ const Block = ({
   leftover,
   // date
   // ascent_type -- use for css?
-  isLast,
-  count
+  isLast
 }) => {
 
   return (
@@ -24,9 +23,9 @@ const Block = ({
       {
         name.map((item, index) => {
           if (isLast[index]) {
+            console.log(item)
             return(
             <div key={index} className="additional-info">
-            <div className="count">{count}</div>
             <div className="leftover">{leftover === 0 ? null : "+" + leftover}</div>
             </div>
             )

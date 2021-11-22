@@ -35,14 +35,14 @@ const SideBar = () => {
   const [total, setTotal] = useState([])
   const [leftover, setLeftover] = useState([])
 
-  const [refresh, setRefresh] = useState([])
-
   const [l1, setL1] = useState(1)
   const [l2, setL2] = useState(2)
   const [l3, setL3] = useState(3)
   const [l4, setL4] = useState(6)
   const [l5, setL5] = useState(10)
   const [l6, setL6] = useState(12)
+
+  const [refresh, setRefresh] = useState([])
 
   const readData = () => {
     setRefresh(refresh + 1)
@@ -61,9 +61,10 @@ const SideBar = () => {
       style, 
       angle,
       startDate,
-      endDate
+      endDate,
+      [l1, l2, l3, l4, l5, l6]
      ))
-  }, [selectedOption, data, style, angle, startDate, endDate]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedOption, data, style, angle, startDate, endDate, l1,l2,l3,l4,l5,l6]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setTotal(get_totals(data, grade, style, angle))
