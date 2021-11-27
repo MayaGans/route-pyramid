@@ -1,18 +1,9 @@
 import {React, useState, useEffect } from "react";
 import { make_pyramid, get_grades, get_totals, get_leftovers, STYLE, ANGLE } from "../../Utils/data-utils";
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import { process } from "./config"
 import useGradeList from "../GradePicker/GradePicker"
 import Pyramid from "../Pyramid/Pyramid"
 import "./SideBar.css"
 import Fab from "../Fab/Fab";
-
-// Config variables
-const SPREADSHEET_ID = process.spreadsheet_id
-const CLIENT_EMAIL = process.client_email;
-const PRIVATE_KEY = process.private_key;
-
-const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
 const SideBar = () => {
 
@@ -41,13 +32,23 @@ const SideBar = () => {
   const [l5, setL5] = useState(10)
   const [l6, setL6] = useState(12)
 
+  useEffect(() => {
+    async function fetchData() {
+      const url = `/.netlify/functions/fetch-routedata`;
+      try {
+        const raw_dat = await  fetch(url).then((res) => res.json())
+        setData(raw_dat);
+      } catch (err) {
+        console.log(err);
+        setData([]);
+      } 
+    }
+    fetchData();
+  }, []);
+
   const appendData = (dat) => {
     setData(data.concat(dat))
   }
-
-  useEffect(() => {
-    requestData()
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setPyramid(make_pyramid(
@@ -69,41 +70,6 @@ const SideBar = () => {
   useEffect(() => {
     setLeftover(get_leftovers(total, [l1,l2,l3,l4,l5,l6]))
   }, [total,l1,l2,l3,l4,l5,l6]) 
-  
-
-  // grab the data from google
-  const requestData = async () => {
-    try {
-      await doc.useServiceAccountAuth({
-        client_email: CLIENT_EMAIL,
-        private_key: PRIVATE_KEY,
-      });
-
-      // loads document properties and worksheets
-      await doc.loadInfo();
-  
-      const sheet = doc.sheetsByIndex[1];
-      const rows = await sheet.getRows();
-
-      setData(rows)
-      setPyramid(make_pyramid(
-        selectedOption, 
-        rows, 
-        gradeList, 
-        "all", 
-        "all",
-        date.getFullYear() + "-01-01",
-        date.toISOString().substring(0, 10),
-        [1,2,3,6,10,12]
-      ))
-
-      setTotal(get_totals(rows, grade, "all", "all", "2021-01-01", "2020-01-01"))
-      setLeftover(get_leftovers(get_totals(rows, grade, "all", "all", "2021-01-01", "2020-01-01"), [1,2,3,6,10,12]))
-  
-    } catch (e) {
-      console.error('Error: ', e);
-    }
-  };
 
   function changePyramid(e) {
     setSelectedOption(e.target.value)
