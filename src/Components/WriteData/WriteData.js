@@ -1,13 +1,4 @@
-import { GoogleSpreadsheet } from "google-spreadsheet";
 import { useState } from 'react'
-import { process } from '../SideBar/config'
-
-// Config variables
-const SPREADSHEET_ID = process.spreadsheet_id
-const CLIENT_EMAIL = process.client_email;
-const PRIVATE_KEY = process.private_key;
-
-const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
 const WriteData = ({onClick, onClose}) => {
 
@@ -18,27 +9,35 @@ const WriteData = ({onClick, onClose}) => {
   const [climbAngle, setClimbAngle] = useState([])
   const [climbStyle, setClimbStyle] = useState([])
 
-  const appendSpreadsheet = async (row) => {
-    try {
-      await doc.useServiceAccountAuth({
-        client_email: CLIENT_EMAIL,
-        private_key: PRIVATE_KEY,
-      });
-      // loads document properties and worksheets
-      await doc.loadInfo();
-  
-      const sheet = doc.sheetsByIndex[1];
-      const result = await sheet.addRow(row); // eslint-disable-line no-unused-vars
+  function log(data) {
+    console.log('-----SUCCESS-----');
+    console.log(data);
+  }
 
-    } catch (e) {
-      console.error('Error: ', e);
-    }
-  };
+  function error(err) {
+    console.log('-----ERROR-----');
+    console.error(err);
+  }
+
+  async function writeData(row) {
+    const url = `/.netlify/functions/fetch-writedata`;
+    
+    try {
+
+    await fetch(url, { 
+      body: JSON.stringify(row)
+    }).then((res) => res.json())
+      .then(log)
+      .catch(error);
+      
+    } catch (err) {
+      console.log(err);
+    } 
+  }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    appendSpreadsheet(
-      {
+    writeData({
       date: climbDate,
       name: climbName,
       ascent_type: climbAscentType,
@@ -48,8 +47,7 @@ const WriteData = ({onClick, onClose}) => {
       attempts: null,
       angle: climbAngle,
       style: climbStyle
-      }
-    )
+    })
     onClick({
       date: climbDate,
       name: climbName,
