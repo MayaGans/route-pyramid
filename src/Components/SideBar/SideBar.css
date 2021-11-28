@@ -1,0 +1,60 @@
+/* inspo https://codepen.io/andiio/pen/tFECp */
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+}
+
+.control-panel {
+  height: 100vh;
+  background-color: #f8f8f8;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.layer-count {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.layer-1 {
+  width: 15%;
+}
+
+.layer-2 {
+  width: 25%;
+}
+
+.layer-3 {
+  width: 40%;
+}
+
+.layer-4 {
+  width: 60%;
+}
+
+.layer-5 {
+  width: 75%;
+}
+
+.layer-6 {
+  width: 90%;
+}
+
+select {
+  display: block;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 0.75em;
+}
