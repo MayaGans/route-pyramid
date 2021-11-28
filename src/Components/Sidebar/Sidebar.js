@@ -36,7 +36,7 @@ const SideBar = () => {
     async function fetchData() {
       const url = `/.netlify/functions/fetch-routedata`;
       try {
-        const raw_dat = await  fetch(url).then((res) => res.json())
+        const raw_dat = await fetch(url).then((res) => res.json())
         setData(raw_dat);
       } catch (err) {
         console.log(err);

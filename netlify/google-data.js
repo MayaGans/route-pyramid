@@ -1,3 +1,4 @@
+/*
 
 if (!process.env.NETLIFY) {
   // get local env vars if not in CI
@@ -20,28 +21,36 @@ exports.handler = async function (event, context) {
   console.log(event);
   console.log(context);
 
-  await doc.useServiceAccountAuth({
-    client_email: process.env.CLIENT_EMAIL,
-    private_key: process.env.PRIVATE_KEY,
-  });
-
-  // loads document properties and worksheets
-  await doc.loadInfo();
-  
   const row = JSON.parse(event.body);
   const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID);
 
+  await doc.useServiceAccountAuth({
+    client_email: process.env.CLIENT_EMAIL, 
+    private_key: process.env.PRIVATE_KEY
+  });
+
+  await doc.loadInfo();
   const sheet = doc.sheetsByIndex[1];
-  const result = await sheet.addRow(row); // eslint-disable-line no-unused-vars
+  const rows = await sheet.getRows();
 
   try {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: `POST Success - added row ${row._rowNumber - 1}`,
-        rowNumber: row._rowNumber - 1 // minus the header row
-      })
-    };
+    switch(event.httpMethod) {
+      case 'GET':
+        return {
+          statusCode: 200,
+          body: JSON.stringify(rows, null, 2)
+        }
+      case 'POST':
+        await doc.loadInfo();
+        await sheet.addRow(row);
+        return {
+          statusCode: 200,
+          body: JSON.stringify({
+            message: `POST Success - added row ${row._rowNumber - 1}`,
+            rowNumber: row._rowNumber - 1 // minus the header row
+          })
+        };
+    }
   } catch (err) {
     console.error('error ocurred in processing ', event);
     console.error(err);
@@ -52,3 +61,5 @@ exports.handler = async function (event, context) {
   }
 
 };
+
+*/
