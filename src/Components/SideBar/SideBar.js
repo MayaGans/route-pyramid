@@ -34,7 +34,7 @@ const SideBar = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const url = `/.netlify/functions/fetch-routedata`;
+      const url = `/.netlify/functions/google-data`;
       try {
         const raw_dat = await fetch(url).then((res) => res.json())
         setData(raw_dat);
