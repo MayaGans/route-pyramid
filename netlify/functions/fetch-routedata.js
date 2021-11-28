@@ -25,7 +25,7 @@ exports.handler = async function (event, context) {
 
     await doc.useServiceAccountAuth({
       client_email: process.env.CLIENT_EMAIL, 
-      private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n')
+      private_key: process.env.PRIVATE_KEY
     });
 
     // loads document properties and worksheets
