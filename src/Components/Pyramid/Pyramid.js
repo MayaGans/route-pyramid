@@ -12,7 +12,12 @@ const Pyramid = ({
   return (
     <div>
     <div className="pyramid">
-    <h1 className="title">Route Pyramid</h1>
+    <h1 className="centered">Route Pyramid</h1>
+    <p className="centered">Powered By: 
+      <a href="https://docs.google.com/spreadsheets/d/1rYfEg1G8pYv94n3p7slSaG9u03cWHwaL-6sTUysutVE/edit#gid=402597733">
+        Jordan&apos;s Climbing Data
+      </a>
+      </p>
       {
         grade.map((item, index) => (
           <Layer 
