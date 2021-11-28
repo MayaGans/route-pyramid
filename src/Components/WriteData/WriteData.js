@@ -19,16 +19,26 @@ const WriteData = ({onClick, onClose}) => {
     console.error(err);
   }
 
-  async function writeData(row) {
-    const url = `/.netlify/functions/fetch-writedata`;
+  async function writeData(climbDate,climbName,climbAscentType,climbGrade,climbAngle,climbStyle) {
     
     try {
-
-    await fetch(url, { 
-      body: JSON.stringify(row)
-    }).then((res) => res.json())
-      .then(log)
-      .catch(error);
+    await fetch('/.netlify/functions/fetch-writedata', {
+        method: 'POST',
+        body: JSON.stringify({
+          date: climbDate,
+          name: climbName,
+          ascent_type: climbAscentType,
+          grade: climbGrade,
+          location: null,
+          country: null,
+          attempts: null,
+          angle: climbAngle,
+          style: climbStyle
+        })
+      })
+        .then((res) => res.json())
+        .then(log)
+        .catch(error);
       
     } catch (err) {
       console.log(err);
@@ -37,17 +47,7 @@ const WriteData = ({onClick, onClose}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    writeData({
-      date: climbDate,
-      name: climbName,
-      ascent_type: climbAscentType,
-      grade: climbGrade,
-      location: null,
-      country: null,
-      attempts: null,
-      angle: climbAngle,
-      style: climbStyle
-    })
+    writeData(climbDate,climbName,climbAscentType,climbGrade,climbAngle,climbStyle)
     onClick({
       date: climbDate,
       name: climbName,
@@ -58,7 +58,7 @@ const WriteData = ({onClick, onClose}) => {
       attempts: null,
       angle: climbAngle,
       style: climbStyle
-      })
+    })
     // this can only be done if all the fields have first been validated
     onClose()
 }

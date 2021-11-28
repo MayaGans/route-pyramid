@@ -17,29 +17,30 @@ if (!process.env.SPREADSHEET_ID)
 const { GoogleSpreadsheet } = require("google-spreadsheet");
 
 exports.handler = async function (event, context) {
+  
   console.log(event);
   console.log(context);
+  const data = JSON.parse(event.body);
+
+  const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID);
 
   await doc.useServiceAccountAuth({
     client_email: process.env.CLIENT_EMAIL,
     private_key: process.env.PRIVATE_KEY,
   });
 
-  // loads document properties and worksheets
   await doc.loadInfo();
   
-  const row = JSON.parse(event.body);
-  const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID);
-
   const sheet = doc.sheetsByIndex[1];
-  const result = await sheet.addRow(row); // eslint-disable-line no-unused-vars
+
+  const result = await sheet.addRow(data); // eslint-disable-line no-unused-vars
 
   try {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: `POST Success - added row ${row._rowNumber - 1}`,
-        rowNumber: row._rowNumber - 1 // minus the header row
+        message: `POST Success - added row ${result._rowNumber - 1}`,
+        rowNumber: result._rowNumber - 1 // minus the header row
       })
     };
   } catch (err) {

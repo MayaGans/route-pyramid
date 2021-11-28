@@ -47,7 +47,6 @@ const SideBar = () => {
   }, []);
 
   const appendData = (dat) => {
-    console.log(dat)
     setData(data.concat(dat))
   }
 
