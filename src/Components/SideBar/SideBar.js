@@ -4,6 +4,7 @@ import useGradeList from "../GradePicker/GradePicker"
 import Pyramid from "../Pyramid/Pyramid"
 import "./SideBar.css"
 import Fab from "../Fab/Fab";
+import DropDown from "../DropDown/DropDown";
 
 const SideBar = () => {
 
@@ -19,8 +20,8 @@ const SideBar = () => {
   const [startDate, setStartDate] = useState(date.getFullYear() + "-01-01")
   const [endDate, setEndDate] = useState(date.toISOString().substring(0, 10))
 
-  const [angle, setAngle] = useState("all")
-  const [style, setStyle] = useState("all")
+  const [angle, setAngle] = useState("All")
+  const [style, setStyle] = useState("All")
   const [pyramid, setPyramid] = useState([])
   const [total, setTotal] = useState([])
   const [leftover, setLeftover] = useState([])
@@ -81,73 +82,44 @@ const SideBar = () => {
   
      <div className="control-panel">
      <form>
-    
-    <label htmlFor="climb">Style</label>
-    <select
-      defaultValue={climb}
-      id="climb"
-      name="climb"
-      onChange={(e) => { setClimb(e.target.value)}}
-      onBlur={(e) => { setClimb(e.target.value)}}
-    >Climb
-    <option value="Boulder">Boulder</option>
-    <option value="Route">Route</option>
-    <option></option> 
-    </select>
+      
+      <DropDown 
+         items={[{label: "Route", value: "Route"},{label:"Boulder", value: "Boulder"}]}
+         val={climb}
+         lab="Style"
+         clickEvt={(e) => { setClimb(e.target.value)}}
+      />
+      
+      <DropDown 
+         items={gradeList.map(x => { return {label: x, value: x}})}
+         val={selectedOption}
+         lab="Top Grade"
+         clickEvt={changePyramid}
+      />
 
-    <label htmlFor="grades">Top Grade</label>
-    <select 
-      id="grades" 
-      name="grades" 
-      value={selectedOption}
-      onBlur={changePyramid}
-      onChange={changePyramid}
-    >
-    <option></option>
-      {
-        gradeList.map(grade => (
-          <option value={grade} key={grade}>{grade}</option>
-        ))
-      }
-    </select>
-
+    <div className="form-group">
     <label htmlFor="start-date">Start Date</label>
     <input value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date" id="start-date" name="start-date"></input>
+    </div>
 
+    <div className="form-group">
     <label htmlFor="end-date">End Date</label>
     <input value={endDate} min={startDate} onChange={(e) => setEndDate(e.target.value)} type="date" id="end-date" name="end-date"></input>
-
-    <label htmlFor="style">Style</label>
-    <select 
-      id="style" 
-      name="style" 
-      value={style}
-      onBlur={(e) => setStyle(e.target.value)}
-      onChange={(e) => setStyle(e.target.value)}
-    >
-    <option value="all">All</option>
-      {
-        STYLE.map(grade => (
-          <option value={grade} key={grade}>{grade}</option>
-        ))
-      }
-    </select>
-
-    <label htmlFor="angle">Angle</label>
-    <select 
-      id="angle" 
-      name="angle" 
-      value={angle}
-      onBlur={(e) => setAngle(e.target.value)}
-      onChange={(e) => setAngle(e.target.value)}
-    >
-    <option value="all">All</option>
-      {
-        ANGLE.map(grade => (
-          <option value={grade} key={grade}>{grade}</option>
-        ))
-      }
-    </select>
+    </div>
+    
+    <DropDown 
+         items={["All"].concat(STYLE).map(x => { return {label: x, value: x}})}
+         val={style}
+         lab="Style"
+         clickEvt={(e) => setStyle(e.target.value)}
+     />
+     
+     <DropDown 
+         items={["All"].concat(ANGLE).map(x => { return {label: x, value: x}})}
+         val={angle}
+         lab="Angle"
+         clickEvt={(e) => setAngle(e.target.value)}
+     />
 
     <div className="layer-input">
     <label htmlFor="layer-input">Block Numbers</label>
