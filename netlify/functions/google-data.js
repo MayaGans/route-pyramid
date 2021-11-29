@@ -1,5 +1,3 @@
-/*
-
 if (!process.env.NETLIFY) {
   // get local env vars if not in CI
   // if in CI i expect its already set via the Netlify UI
@@ -21,35 +19,43 @@ exports.handler = async function (event, context) {
   console.log(event);
   console.log(context);
 
-  const row = JSON.parse(event.body);
   const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID);
 
   await doc.useServiceAccountAuth({
     client_email: process.env.CLIENT_EMAIL, 
-    private_key: process.env.PRIVATE_KEY
+    private_key: process.env.PRIVATE_KEY.replace(/\\n/gm, '\n'),
   });
 
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[1];
-  const rows = await sheet.getRows();
 
   try {
     switch(event.httpMethod) {
-      case 'GET':
+      case 'GET': {
+        const rows = await sheet.getRows();
+        const serializedRows = rows.map(serializeRow);
         return {
           statusCode: 200,
-          body: JSON.stringify(rows, null, 2)
+          body: JSON.stringify(serializedRows)
         }
-      case 'POST':
-        await doc.loadInfo();
-        await sheet.addRow(row);
+      }
+      case 'POST': {
+        const data = JSON.parse(event.body);
+        const result = await sheet.addRow(data);
         return {
           statusCode: 200,
           body: JSON.stringify({
-            message: `POST Success - added row ${row._rowNumber - 1}`,
-            rowNumber: row._rowNumber - 1 // minus the header row
+            message: `POST Success - added row ${result._rowNumber - 1}`,
+            rowNumber: result._rowNumber - 1 // minus the header row
           })
         };
+      }
+      default: {
+        return {
+          statusCode: 500,
+          body: 'unrecognized HTTP Method, must be one of GET/POST/PUT/DELETE'
+        };
+      }
     }
   } catch (err) {
     console.error('error ocurred in processing ', event);
@@ -60,6 +66,12 @@ exports.handler = async function (event, context) {
     };
   }
 
-};
+  function serializeRow(row) {
+    let temp = {};
+    sheet.headerValues.map((header) => {
+      temp[header] = row[header];
+    });
+    return temp;
+  }
 
-*/
+};
