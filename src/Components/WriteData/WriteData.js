@@ -1,10 +1,14 @@
 import { useState } from 'react'
+import DropDown from "../DropDown/DropDown"
+import DateSelect from "../DateSelect/DateSelect"
+import TextInput from "../TextInput/TextInput"
+import {STYLE, ANGLE, BOULDER_GRADES, ROUTE_GRADES} from "../../Utils/data-utils"
 
 const WriteData = ({onClick, onClose}) => {
 
   const [climbName, setClimbName] = useState([])
   const [climbGrade, setClimbGrade] = useState([])
-  const [climbDate, setClimbDate] = useState([])
+  const [climbDate, setClimbDate] = useState(new Date().toISOString().substring(0, 10))
   const [climbAscentType, setClimbAscentType] = useState([])
   const [climbAngle, setClimbAngle] = useState([])
   const [climbStyle, setClimbStyle] = useState([])
@@ -77,29 +81,48 @@ const WriteData = ({onClick, onClose}) => {
       */
       }
       
-      { /* free form text */}
-      <label htmlFor="climbName">Name</label>
-      <input id="climbName" value={climbName} type="text" onChange={e => setClimbName(e.target.value)}/>
 
-      { /* this is redundant */}
-      <label htmlFor="climbGrade">Grade</label>
-      <input id="climbGrade" value={climbGrade} type="text" onChange={(e) => setClimbGrade(e.target.value)}/>
+      <TextInput 
+        label= "climbName"
+        lab_text="Name"
+        value={climbName}
+        clickEvt={e => setClimbName(e.target.value)}
+      />
 
-      { /* date picker */}
-      <label htmlFor="climbDate">Date</label>
-      <input id="climbDate" value={climbDate} type="text" onChange={(e) => setClimbDate(e.target.value)}/>
+      <DropDown 
+         items={ROUTE_GRADES.concat(BOULDER_GRADES).map(x => { return {label: x, value: x}})}
+         val={climbGrade}
+         lab="Grade"
+         clickEvt={(e) => setClimbGrade(e.target.value)}
+      />
 
-      { /* Onsight or Redpoint */}
-      <label htmlFor="climbAscentType">Ascent Type</label>
-      <input id="climbAscentType" value={climbAscentType} type="text" onChange={(e) => setClimbAscentType(e.target.value)}/>
+      <DateSelect
+         label="climbData"
+         lab_text="Date"
+         value={climbDate}
+         clickEvt={(e) => setClimbDate(e.target.value)}
+      />
+
+      <DropDown 
+         items={[{label: "Redpoint", value: "Redpoint"},{label:"Onsight", value: "Onsight"}]}
+         val={climbAscentType}
+         lab="Ascent Type"
+         clickEvt={(e) => setClimbAscentType(e.target.value)}
+      />
       
-      { /* Onsight or Redpoint */}
-      <label htmlFor="climbAngle">Angle</label>
-      <input id="climbAscentType" value={climbAngle} type="text" onChange={(e) => setClimbAngle(e.target.value)}/>
-
-      { /* Onsight or Redpoint */}
-      <label htmlFor="climbStyle">Style</label>
-      <input id="climbAscentType" value={climbStyle} type="text" onChange={(e) => setClimbStyle(e.target.value)}/>
+      <DropDown 
+         items={["All"].concat(STYLE).map(x => { return {label: x, value: x}})}
+         val={climbStyle}
+         lab="Style"
+         clickEvt={(e) => setClimbStyle(e.target.value)}
+      />
+     
+     <DropDown 
+         items={["All"].concat(ANGLE).map(x => { return {label: x, value: x}})}
+         val={climbAngle}
+         lab="Angle"
+         clickEvt={(e) => setClimbAngle(e.target.value)}
+     />
 
       { /* you can only submit if all sections are filled */}
       <input type="submit" value="Submit" />

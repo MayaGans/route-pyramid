@@ -2,7 +2,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  grid-template-columns: 1fr 3fr;
 }
 
 .control-panel {
@@ -10,20 +10,12 @@
   background-color: #f8f8f8;
 }
 
-.input-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  display: block;
-  margin-bottom: 20px;
-}
+/* pyramid input */
 
 .layer-count {
   margin: 0 auto;
   text-align: center;
+  display: block;
 }
 
 .layer-1 {
@@ -48,13 +40,4 @@ input {
 
 .layer-6 {
   width: 90%;
-}
-
-select {
-  display: block;
-  margin-bottom: 20px;
-}
-
-label {
-  font-size: 0.75em;
 }
