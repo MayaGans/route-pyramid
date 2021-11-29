@@ -10,20 +10,12 @@
   background-color: #f8f8f8;
 }
 
-.input-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  display: block;
-  margin-bottom: 20px;
-}
+/* pyramid input */
 
 .layer-count {
   margin: 0 auto;
   text-align: center;
+  display: block;
 }
 
 .layer-1 {
@@ -48,18 +40,4 @@ input {
 
 .layer-6 {
   width: 90%;
-}
-
-select {
-  display: block;
-  margin-bottom: 20px;
-}
-
-label {
-  font-size: 0.75em;
-}
-
-.form-group > input {
-  width: 100%;
-  margin: 0 auto 20px auto;
 }

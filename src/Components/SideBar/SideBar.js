@@ -4,11 +4,12 @@ import useGradeList from "../GradePicker/GradePicker"
 import Pyramid from "../Pyramid/Pyramid"
 import "./SideBar.css"
 import Fab from "../Fab/Fab";
+import DateSelect from "../DateSelect/DateSelect"
 import DropDown from "../DropDown/DropDown";
 
 const SideBar = () => {
 
-  let date = new Date()
+  const date = new Date()
 
   const [climb, setClimb] = useState('Route')
   const [gradeList] = useGradeList(climb)
@@ -79,7 +80,6 @@ const SideBar = () => {
 
   return(
     <div className="content">
-  
      <div className="control-panel">
      <form>
       
@@ -96,17 +96,22 @@ const SideBar = () => {
          lab="Top Grade"
          clickEvt={changePyramid}
       />
-
-    <div className="form-group">
-    <label htmlFor="start-date">Start Date</label>
-    <input value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date" id="start-date" name="start-date"></input>
-    </div>
-
-    <div className="form-group">
-    <label htmlFor="end-date">End Date</label>
-    <input value={endDate} min={startDate} onChange={(e) => setEndDate(e.target.value)} type="date" id="end-date" name="end-date"></input>
-    </div>
-    
+      
+      <DateSelect
+         label="start-date"
+         lab_text="Start Date"
+         value={startDate}
+         clickEvt={(e) => setStartDate(e.target.value)}
+      />
+      
+      <DateSelect
+         label="end-date"
+         lab_text="End Date"
+         value={endDate}
+         min={startDate}
+         clickEvt={(e) => setEndDate(e.target.value)}
+      />
+  
     <DropDown 
          items={["All"].concat(STYLE).map(x => { return {label: x, value: x}})}
          val={style}
