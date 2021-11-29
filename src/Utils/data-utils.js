@@ -38,8 +38,8 @@ export function get_layer(dat, layer_grade, num, climb_style, climb_angle, climb
   })
 
     // filter for the climb style and angle if provided
-    if (climb_style !== "all") climbs = climbs.filter((x) => x.style === climb_style)
-    if (climb_angle !== "all") climbs = climbs.filter((x) => x.angle === climb_angle)
+    if (climb_style !== "All") climbs = climbs.filter((x) => x.style === climb_style)
+    if (climb_angle !== "All") climbs = climbs.filter((x) => x.angle === climb_angle)
   
     climbs = climbs.map((d) => {
       return {
@@ -121,8 +121,8 @@ export function get_totals(data, grade, climb_style, climb_angle, climb_start, c
   })
 
   // filter for the climb style and angle if provided
-  if (climb_style !== "all") result = result.filter((x) => x.style === climb_style)
-  if (climb_angle !== "all") result = result.filter((x) => x.angle === climb_angle)
+  if (climb_style !== "All") result = result.filter((x) => x.style === climb_style)
+  if (climb_angle !== "All") result = result.filter((x) => x.angle === climb_angle)
 
   // turn into a vector of grades
   result = result.map(x => x.grade)
