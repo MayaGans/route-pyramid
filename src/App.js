@@ -1,4 +1,4 @@
-import SideBar from "./Components/SideBar-temp/SideBar-temp";
+import SideBar from "./Components/SideBar/SideBar";
 
 function App() {
 
