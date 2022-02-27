@@ -8,15 +8,16 @@ import RadioInput from "../RadioInput/RadioInput"
 
 const WriteData = ({onClick, onClose}) => {
 
-  const [climbName, setClimbName] = useState([])
-  const [climbGrade, setClimbGrade] = useState([])
-  const [climbDate, setClimbDate] = useState(new Date().toISOString().substring(0, 10))
-  const [climbAscentType, setClimbAscentType] = useState([])
-  const [climbAngle, setClimbAngle] = useState([])
-  const [climbStyle, setClimbStyle] = useState([])
-  
   const [climb, setClimb] = useState('Route')
   const [gradeList] = useGradeList(climb)
+
+  const [climbName, setClimbName] = useState('')
+  const [climbGrade, setClimbGrade] = useState(gradeList[0])
+  const [climbDate, setClimbDate] = useState(new Date().toISOString().substring(0, 10))
+  const [climbAscentType, setClimbAscentType] = useState('Repoint')
+  const [climbAngle, setClimbAngle] = useState('All')
+  const [climbStyle, setClimbStyle] = useState('All')
+  
 
 
   /*
