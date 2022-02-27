@@ -6,6 +6,7 @@ import "./SideBar.css"
 import Fab from "../Fab/Fab";
 import DateSelect from "../DateSelect/DateSelect"
 import DropDown from "../DropDown/DropDown";
+import RadioInput from "../RadioInput/RadioInput";
 
 const SideBar = () => {
 
@@ -83,9 +84,10 @@ const SideBar = () => {
      <div className="control-panel">
      <form>
       
-      <DropDown 
+      <RadioInput
          items={[{label: "Route", value: "Route"},{label:"Boulder", value: "Boulder"}]}
          val={climb}
+         checked={climb}
          lab="Style"
          clickEvt={(e) => { setClimb(e.target.value)}}
       />

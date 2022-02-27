@@ -4,6 +4,7 @@ import DateSelect from "../DateSelect/DateSelect"
 import TextInput from "../TextInput/TextInput"
 import useGradeList from "../GradePicker/GradePicker"
 import {STYLE, ANGLE} from "../../Utils/data-utils"
+import RadioInput from "../RadioInput/RadioInput"
 
 const WriteData = ({onClick, onClose}) => {
 
@@ -16,6 +17,7 @@ const WriteData = ({onClick, onClose}) => {
   
   const [climb, setClimb] = useState('Route')
   const [gradeList] = useGradeList(climb)
+
 
   /*
   function log(data) {
@@ -97,9 +99,10 @@ const WriteData = ({onClick, onClose}) => {
         clickEvt={e => setClimbName(e.target.value)}
       />
 
-      <DropDown 
+      <RadioInput
          items={[{label: "Route", value: "Route"},{label:"Boulder", value: "Boulder"}]}
          val={climb}
+         checked={climb}
          lab="Style"
          clickEvt={(e) => { setClimb(e.target.value)}}
       />
