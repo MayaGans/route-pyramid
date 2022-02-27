@@ -2,7 +2,8 @@ import { useState } from 'react'
 import DropDown from "../DropDown/DropDown"
 import DateSelect from "../DateSelect/DateSelect"
 import TextInput from "../TextInput/TextInput"
-import {STYLE, ANGLE, BOULDER_GRADES, ROUTE_GRADES} from "../../Utils/data-utils"
+import useGradeList from "../GradePicker/GradePicker"
+import {STYLE, ANGLE} from "../../Utils/data-utils"
 
 const WriteData = ({onClick, onClose}) => {
 
@@ -12,7 +13,11 @@ const WriteData = ({onClick, onClose}) => {
   const [climbAscentType, setClimbAscentType] = useState([])
   const [climbAngle, setClimbAngle] = useState([])
   const [climbStyle, setClimbStyle] = useState([])
+  
+  const [climb, setClimb] = useState('Route')
+  const [gradeList] = useGradeList(climb)
 
+  /*
   function log(data) {
     console.log('-----SUCCESS-----');
     console.log(data);
@@ -22,11 +27,12 @@ const WriteData = ({onClick, onClose}) => {
     console.log('-----ERROR-----');
     console.error(err);
   }
+  */
 
   async function writeData(climbDate,climbName,climbAscentType,climbGrade,climbAngle,climbStyle) {
     
     try {
-    await fetch('/.netlify/functions/fetch-writedata', {
+    await fetch('/.netlify/functions/google-data', {
         method: 'POST',
         body: JSON.stringify({
           date: climbDate,
@@ -41,8 +47,10 @@ const WriteData = ({onClick, onClose}) => {
         })
       })
         .then((res) => res.json())
+        /*
         .then(log)
         .catch(error);
+        */
       
     } catch (err) {
       console.log(err);
@@ -90,12 +98,19 @@ const WriteData = ({onClick, onClose}) => {
       />
 
       <DropDown 
-         items={ROUTE_GRADES.concat(BOULDER_GRADES).map(x => { return {label: x, value: x}})}
+         items={[{label: "Route", value: "Route"},{label:"Boulder", value: "Boulder"}]}
+         val={climb}
+         lab="Style"
+         clickEvt={(e) => { setClimb(e.target.value)}}
+      />
+      
+      <DropDown 
+         items={gradeList.map(x => { return {label: x, value: x}})}
          val={climbGrade}
-         lab="Grade"
+         lab="Top Grade"
          clickEvt={(e) => setClimbGrade(e.target.value)}
       />
-
+      
       <DateSelect
          label="climbData"
          lab_text="Date"
