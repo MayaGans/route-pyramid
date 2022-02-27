@@ -14,7 +14,7 @@ export const BOULDER_GRADES = [
   "v2", "v1", "v0"
 ]
 
-export const STYLE = ["Crimps", "Slopers", "Pinch", "Compression", "Pockets", "Incuts", "Jugs", "Jam"]
+export const STYLE = ["Crimps", "Slopers", "Pinch", "Compression", "Pockets", "Incuts", "Jugs", "Jam", "Dyno"]
 export const ANGLE = ["Slab", "Vertical", "Overhang", "Roof"]
 
 // given the climbing grade array
