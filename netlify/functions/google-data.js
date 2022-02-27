@@ -15,9 +15,9 @@ if (!process.env.SPREADSHEET_ID)
 
 const { GoogleSpreadsheet } = require("google-spreadsheet");
 
-exports.handler = async function (event, context) {
-  console.log(event);
-  console.log(context);
+exports.handler = async function (event) {
+  //console.log(event.httpMethod);
+  //console.log(context);
 
   const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID);
 
@@ -27,6 +27,7 @@ exports.handler = async function (event, context) {
   });
 
   await doc.loadInfo();
+
   const sheet = doc.sheetsByIndex[1];
 
   try {
@@ -42,6 +43,7 @@ exports.handler = async function (event, context) {
       case 'POST': {
         const data = JSON.parse(event.body);
         const result = await sheet.addRow(data);
+        console.log(result)
         return {
           statusCode: 200,
           body: JSON.stringify({
