@@ -85,10 +85,14 @@
 .filter-title {
   position: absolute;
   color: black;
-  top: 15px;
+  top: 25px;
   left: 20px;
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 1.2rem;
+}
+
+.form-group {
+  font-size: 0.5rem;
 }
 
 #nav-icon4 span:nth-child(3) {
@@ -168,7 +172,7 @@
   text-decoration: none;
   width: 80%;
   height: 20px;
-  line-height: 25px;
+  line-height: 16px;
   padding: 20px;
   vertical-align: center;
   display: flex;
@@ -187,10 +191,15 @@
 
 /* pyramid input */
 
+.layer-input label {
+  font-size: 0.5rem;
+}
+
 .layer-count {
   margin: 0 auto;
   text-align: center;
   display: block;
+  font-size: 0.5rem;
 }
 
 .layer-1 {
@@ -219,7 +228,7 @@
 
 .accordion .container {
   position: relative;
-  margin: 20px;
+  margin: 12px 20px;
 }
 
 /* Positions the labels relative to the .container. Adds padding to the top and bottom and increases font size. Also makes its cursor a pointer */
@@ -227,13 +236,13 @@
 .accordion .label {
   position: relative;
   padding: 10px 0;
-  font-size: 1.2rem;
+  font-size: 0.85rem;
   font-weight: 800;
   color: black;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 12px;
 }
 
 /* Hides the content (height: 0), decreases font size, justifies text and adds transition */
@@ -242,7 +251,7 @@
   position: relative;
   height: 0;
   color: gray;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-align: justify;
   width: 200px;
   overflow: hidden;
@@ -255,3 +264,11 @@
 }
 
 /* Changes from plus sign to negative sign once active */
+
+.form-group input {
+  font-size: 0.5rem;
+}
+
+.form-group select {
+  font-size: 0.5rem;
+}

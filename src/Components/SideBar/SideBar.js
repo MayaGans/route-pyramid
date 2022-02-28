@@ -1,6 +1,6 @@
 import {React, useState, useEffect } from "react";
-import { make_pyramid, get_grades, get_totals, get_leftovers, STYLE, ANGLE } from "../../Utils/data-utils";
-import useGradeList from "../GradePicker/GradePicker"
+import { make_pyramid, get_grades, get_totals, get_leftovers, STYLE, ANGLE, ROUTE_GRADES, BOULDER_GRADES } from "../../Utils/data-utils";
+// import useGradeList from "../GradePicker/GradePicker"
 import Pyramid from "../Pyramid/Pyramid"
 import "./SideBar.css"
 import Fab from "../Fab/Fab";
@@ -20,7 +20,8 @@ const SideBar = () => {
   const date = new Date()
 
   const [climb, setClimb] = useState('Route')
-  const [gradeList] = useGradeList(climb)
+  const [gradeList, setGradelist] = useState(ROUTE_GRADES)
+  //const [gradeList] = useGradeList(climb)
   const [selectedOption, setSelectedOption] = useState("5.13c")
   const [grade, setGrade] = useState(get_grades(selectedOption, gradeList))
   const [data, setData] = useState([])
@@ -92,6 +93,25 @@ const SideBar = () => {
 
   function changeClimbType(e) {
     setClimb(e.target.value)
+    if (e.target.value === 'Route') {
+      setSelectedOption('5.13c')
+      setGradelist(ROUTE_GRADES)
+      setGrade(get_grades('5.13c', gradeList))
+    } else {
+      setSelectedOption('v9')
+      setGradelist(BOULDER_GRADES)
+      setGrade(get_grades('v9', gradeList))
+    }
+    setPyramid(make_pyramid(
+      selectedOption, 
+      data, 
+      gradeList, 
+      style, 
+      angle,
+      startDate,
+      endDate,
+      [l1, l2, l3, l4, l5, l6]
+     ))
   }
 
   return(
