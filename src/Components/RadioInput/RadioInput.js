@@ -8,7 +8,7 @@ const RadioInput = ({items, lab, clickEvt, checked}) => {
     <form>
       {items.map(({label, value}) => (
         <div key={label}>
-        <input checked={checked === value ? 'checked' : ''} type="radio" value={value} id={value} onChange={clickEvt} name={lab} />
+        <input checked={checked === value ? 'checked' : ''} type="radio" value={value} id={value} onClick={clickEvt} name={lab} />
         <label htmlFor={label}>{value}</label>
         </div>
       ))}

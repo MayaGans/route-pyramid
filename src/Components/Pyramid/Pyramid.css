@@ -1,5 +1,15 @@
 /* put css from index.css here */
 
+.true {
+  margin-left: 250px;
+  width: 70%;
+}
+
+.false {
+  margin-left: 70px;
+  width: 90%;
+}
+
 h1.centered {
   margin: 10px 0 0 0;
   padding-bottom: 0;
@@ -11,5 +21,6 @@ h1.centered {
 }
 
 .pyramid {
-  width: 90%;
+  -webkit-transition: margin 0.5s;
+  transition: margin 0.5s;
 }

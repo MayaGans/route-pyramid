@@ -8,6 +8,13 @@ import DateSelect from "../DateSelect/DateSelect"
 import DropDown from "../DropDown/DropDown";
 import RadioInput from "../RadioInput/RadioInput";
 
+//import difficulty_icon from "../../images/difficulty.png"
+import climb_icon from "../../images/climb.png"
+import style_icon from "../../images/style.png"
+import angle_icon from "../../images/angle.png"
+import pyramid_icon from "../../images/pyramid.png"
+import date_icon from "../../images/calendar.png"
+
 const SideBar = () => {
 
   const date = new Date()
@@ -34,6 +41,10 @@ const SideBar = () => {
   const [l4, setL4] = useState(6)
   const [l5, setL5] = useState(10)
   const [l6, setL6] = useState(12)
+
+  const [expanded, setExpanded] = useState(true)
+
+  // const [expanded, setExpanded] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
@@ -64,7 +75,7 @@ const SideBar = () => {
       endDate,
       [l1, l2, l3, l4, l5, l6]
      ))
-  }, [selectedOption, data, style, angle, startDate, endDate, l1,l2,l3,l4,l5,l6]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedOption, gradeList, data, style, angle, startDate, endDate, l1,l2,l3,l4,l5,l6])
 
   useEffect(() => {
     setTotal(get_totals(data, grade, style, angle, startDate, endDate))
@@ -79,27 +90,50 @@ const SideBar = () => {
     setGrade(get_grades(e.target.value, gradeList))
   }
 
+  function changeClimbType(e) {
+    setClimb(e.target.value)
+  }
+
   return(
     <div className="content">
-     <div className="control-panel">
-     <form>
-      
-      <RadioInput
+     <div className={"sidebar " + expanded}>
+
+    <div className="filter-title">Filters</div>
+
+     <button onClick={() => setExpanded(!expanded)} className="leftBtn" >
+      <div id="nav-icon4" className={expanded + ""}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+     </button>
+
+     <ul className="sidebar-nav accordion-body">
+     <div className="accordion">
+
+     <div className="container active">
+       <div className="label" role='button' tabIndex='0' onClick={() => setExpanded(!expanded)} onKeyDown={() => setExpanded(!expanded)}>
+       Type
+       <img src={climb_icon} alt="climb type icon"/>
+       </div>
+       <div className='sidebar-content'>
+       <RadioInput
          items={[{label: "Route", value: "Route"},{label:"Boulder", value: "Boulder"}]}
          val={climb}
          checked={climb}
          lab="Style"
-         clickEvt={(e) => { setClimb(e.target.value)}}
+         clickEvt={changeClimbType}
       />
-      
-      <DropDown 
-         items={gradeList.map(x => { return {label: x, value: x}})}
-         val={selectedOption}
-         lab="Top Grade"
-         clickEvt={changePyramid}
-      />
-      
-      <DateSelect
+       </div>
+      </div>
+
+     <div className="container active">
+       <div className="label" role='button' tabIndex='0' onClick={() => setExpanded(!expanded)} onKeyDown={() => setExpanded(!expanded)}>
+       Date
+       <img src={date_icon} alt="climb type icon"/>
+       </div>
+       <div className='sidebar-content'>
+       <DateSelect
          label="start-date"
          lab_text="Start Date"
          value={startDate}
@@ -113,22 +147,53 @@ const SideBar = () => {
          min={startDate}
          clickEvt={(e) => setEndDate(e.target.value)}
       />
-  
-    <DropDown 
+       </div>
+     </div>
+
+     <div className="container active">
+       <div className="label" role='button' tabIndex='0' onClick={() => setExpanded(!expanded)} onKeyDown={() => setExpanded(!expanded)}>
+       Style
+       <img src={style_icon} alt="style icon"/>
+       </div>
+       <div className='sidebar-content'>
+       <DropDown 
          items={["All"].concat(STYLE).map(x => { return {label: x, value: x}})}
          val={style}
          lab="Style"
          clickEvt={(e) => setStyle(e.target.value)}
      />
-     
-     <DropDown 
+       </div>
+      </div>
+
+     <div className="container active">
+       <div className="label" role='button' tabIndex='0' onClick={() => setExpanded(!expanded)} onKeyDown={() => setExpanded(!expanded)}>
+       Angle
+       <img src={angle_icon} alt="angle icon"/>
+       </div>
+       <div className='sidebar-content'>
+       <DropDown 
          items={["All"].concat(ANGLE).map(x => { return {label: x, value: x}})}
          val={angle}
          lab="Angle"
          clickEvt={(e) => setAngle(e.target.value)}
      />
+       </div>
+      </div>
 
-    <div className="layer-input">
+     <div className="container active">
+       <div className="label" role='button' tabIndex='0' onClick={() => setExpanded(!expanded)} onKeyDown={() => setExpanded(!expanded)}>
+       Pyramid
+       <img src={pyramid_icon} alt="pyramid icon"/>
+       </div>
+       <div className='sidebar-content'>
+       <DropDown 
+         items={gradeList.map(x => { return {label: x, value: x}})}
+         val={selectedOption}
+         lab="Top Grade"
+         clickEvt={changePyramid}
+      />
+
+<div className="layer-input">
     <label htmlFor="layer-input">Block Numbers</label>
     <input className="layer-count layer-1" type="number" value={l1} onChange={(e) => setL1(+e.target.value)} min="1"/>
     <input className="layer-count layer-2" type="number" value={l2} onChange={(e) => setL2(+e.target.value)} min="1"/>
@@ -137,11 +202,19 @@ const SideBar = () => {
     <input className="layer-count layer-5" type="number" value={l5} onChange={(e) => setL5(+e.target.value)} min="1"/>
     <input className="layer-count layer-6" type="number" value={l6} onChange={(e) => setL6(+e.target.value)} min="1"/>
     </div>
+       </div>
+      </div>
+
+      </div>
+    </ul>
+
+     <form>
+      
 
     </form>
     </div>
   
-    <Pyramid grade={grade} pyramid={pyramid} total={total} leftover={leftover} count={[l1,l2,l3,l4,l5,l6]}/>
+    <Pyramid expanded={expanded} grade={grade} pyramid={pyramid} total={total} leftover={leftover} count={[l1,l2,l3,l4,l5,l6]}/>
     <Fab onClick={appendData}/>
     </div>
   );

@@ -10,6 +10,181 @@
   background-color: #f8f8f8;
 }
 
+.sidebar.false {
+  margin-left: -180px;
+}
+
+.false .sidebar-content {
+  display: none;
+  transition: 0.5s;
+}
+
+.leftBtn {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: none;
+  background: transparent;
+}
+
+.container.active:first-child {
+  margin-top: 5px;
+}
+
+#nav-icon4 {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+  cursor: pointer;
+  margin-left: 195px;
+  margin-top: 20px;
+}
+
+#nav-icon4 span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: black;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+
+#nav-icon4 span:nth-child(1) {
+  top: 0px;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  -o-transform-origin: left center;
+  transform-origin: left center;
+}
+
+#nav-icon4 span:nth-child(2) {
+  top: 10px;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  -o-transform-origin: left center;
+  transform-origin: left center;
+}
+
+.filter-title {
+  position: absolute;
+  color: black;
+  top: 15px;
+  left: 20px;
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+#nav-icon4 span:nth-child(3) {
+  top: 20px;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  -o-transform-origin: left center;
+  transform-origin: left center;
+}
+
+#nav-icon4.true span:nth-child(1) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  top: -3px;
+  left: 5px;
+}
+
+#nav-icon4.true span:nth-child(2) {
+  width: 0%;
+  opacity: 0;
+}
+
+#nav-icon4.true span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  top: 18.5px;
+  left: 5px;
+}
+
+.sidebar.true {
+  margin-left: 0px;
+}
+
+.sidebar {
+  color: #fff;
+  background: white;
+  width: 250px;
+  max-width: 250px;
+  height: 100%;
+  float: left;
+  position: fixed;
+  z-index: 1000;
+  display: block;
+  -webkit-transition: margin 0.25s;
+  transition: margin 0.25s;
+  flex: 1;
+  box-shadow: 3px 0 5px -2px #888;
+}
+
+#navbar-toggle {
+  cursor: pointer;
+}
+#toggleView {
+  margin-left: 44px;
+}
+.menu-icon {
+  float: right;
+}
+.sidebar-nav {
+  display: block;
+  float: left;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sidebar-nav li {
+  padding-left: 20px;
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+  float: left;
+  text-decoration: none;
+  width: 80%;
+  height: 20px;
+  line-height: 25px;
+  padding: 20px;
+  vertical-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar-nav .container img {
+  /* filter: invert(100%); */
+  width: 30px;
+  height: 30px;
+}
+
+.sidebar-nav li:hover {
+  border-left: solid 2px black;
+}
+
 /* pyramid input */
 
 .layer-count {
@@ -41,3 +216,42 @@
 .layer-6 {
   width: 90%;
 }
+
+.accordion .container {
+  position: relative;
+  margin: 20px;
+}
+
+/* Positions the labels relative to the .container. Adds padding to the top and bottom and increases font size. Also makes its cursor a pointer */
+
+.accordion .label {
+  position: relative;
+  padding: 10px 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+/* Hides the content (height: 0), decreases font size, justifies text and adds transition */
+
+.accordion .sidebar-content {
+  position: relative;
+  height: 0;
+  color: gray;
+  font-size: 0.8rem;
+  text-align: justify;
+  width: 200px;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-left: 3px;
+}
+
+.accordion .container.active .sidebar-content {
+  height: max-content;
+}
+
+/* Changes from plus sign to negative sign once active */

@@ -6,7 +6,8 @@ const Pyramid = ({
   pyramid,
   total,
   leftover,
-  count
+  count,
+  expanded
 }) => {
 
   return (
@@ -17,7 +18,7 @@ const Pyramid = ({
         Jordan&apos;s Climbing Data
       </a>
       </p>
-    <div className="pyramid">
+    <div className={"pyramid " + expanded}>
       {
         grade.map((item, index) => (
           <Layer 
