@@ -1,21 +1,19 @@
 const { GoogleSpreadsheet } = require("google-spreadsheet");
 
 // required env vars
-if (!process.env.CLIENT_EMAIL) throw new Error('no GOOGLE_SERVICE_ACCOUNT_EMAIL');
-if (!process.env.PRIVATE_KEY) throw new Error('no GOOGLE_PRIVATE_KEY');
-if (!process.env.SPREADSHEET_ID) throw new Error('no GOOGLE_SPREADSHEET_ID_FROM_URL');
+if (!process.env.CLIENT_EMAIL)
+  throw new Error("no GOOGLE_SERVICE_ACCOUNT_EMAIL");
+if (!process.env.PRIVATE_KEY) throw new Error("no GOOGLE_PRIVATE_KEY");
+if (!process.env.SPREADSHEET_ID)
+  throw new Error("no GOOGLE_SPREADSHEET_ID_FROM_URL");
 
 exports.handler = async function (event, context) {
-
-  console.log(event);
-  console.log(context);
-
   const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID);
 
   // https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication
   await doc.useServiceAccountAuth({
     client_email: process.env.CLIENT_EMAIL,
-    private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n')
+    private_key: process.env.PRIVATE_KEY.replace(/\\n/g, "\n"),
   });
 
   await doc.loadInfo();
@@ -26,14 +24,14 @@ exports.handler = async function (event, context) {
   try {
     return {
       statusCode: 200,
-      body: JSON.stringify(serializedRows)
-    }
+      body: JSON.stringify(serializedRows),
+    };
   } catch (err) {
-    console.error('error ocurred in processing ', event);
+    console.error("error ocurred in processing ", event);
     console.error(err);
     return {
       statusCode: 500,
-      body: err.toString()
+      body: err.toString(),
     };
   }
 
@@ -44,5 +42,4 @@ exports.handler = async function (event, context) {
     });
     return temp;
   }
-
 };
