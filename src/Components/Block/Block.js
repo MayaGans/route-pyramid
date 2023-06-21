@@ -34,7 +34,7 @@ const Block = ({
             >
               <strong>
                 {item &&
-                  (item.length > 25 ? item.substring(0, 25) + "..." : item)}
+                  (item.length > 20 ? item.substring(0, 20) + "..." : item)}
               </strong>
               <span className="block-date">{date[index]}</span>
               <div className="icon-container">
