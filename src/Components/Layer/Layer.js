@@ -1,5 +1,5 @@
 import Block from "../Block/Block";
-import "./Layer.css"
+import "./Layer.css";
 
 const Layer = ({
   name,
@@ -8,22 +8,25 @@ const Layer = ({
   total,
   leftover,
   isLast,
-  count
+  count,
+  tries,
+  ascent_type,
 }) => {
-
   return (
     <div className="layer">
-      <Block 
-        name={name} 
-        grade={grade} 
+      <Block
+        name={name}
+        grade={grade}
         date={date}
         total={total}
         leftover={leftover}
         count={count}
         isLast={isLast}
+        tries={tries}
+        ascent_type={ascent_type}
       />
     </div>
   );
-}
+};
 
 export default Layer;

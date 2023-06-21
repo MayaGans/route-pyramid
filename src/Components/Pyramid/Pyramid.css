@@ -13,3 +13,18 @@ h1.centered {
 .pyramid {
   width: 90%;
 }
+
+.legend {
+  display: grid;
+    justify-content: center;
+    grid-template-columns: 70px 70px 70px;
+    text-align: center;
+    gap: 17px;
+    margin: 15px;
+}
+
+.legend-item {
+  padding: 6px 3px;
+  border-radius: 5px;
+  border: solid 3px black;
+}

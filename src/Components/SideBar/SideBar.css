@@ -2,12 +2,16 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 300px 1fr;
+  height: 100vh;
 }
 
 .control-panel {
   height: 100vh;
   background-color: #f8f8f8;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 /* pyramid input */
