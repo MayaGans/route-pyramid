@@ -1,28 +1,34 @@
 import React from "react";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import Box from "@mui/material/Box";
 
-const RadioInput = ({ items, lab, clickEvt, checked }) => {
+export default function RadioInput({ items, lab, clickEvt, checked }) {
   return (
-    <div className="form-group">
-      <label className="control-label" htmlFor={lab}>
-        {lab}
-      </label>
-      <form>
-        {items.map(({ label, value }) => (
-          <div key={label}>
-            <input
-              checked={checked === value ? "checked" : ""}
-              type="radio"
-              value={value}
-              id={value}
-              onChange={clickEvt}
-              name={lab}
-            />
-            <label htmlFor={label}>{value}</label>
-          </div>
-        ))}
-      </form>
-    </div>
+    <Box sx={{ minWidth: 300, marginLeft: 1 }}>
+      <FormControl>
+        <FormLabel id={lab}>{lab}</FormLabel>
+        <RadioGroup
+          aria-labelledby={lab}
+          defaultValue={checked}
+          name="radio-buttons-group"
+          onChange={clickEvt}
+        >
+          {items.map((value) => {
+            return (
+              <FormControlLabel
+                value={value}
+                control={<Radio />}
+                label={value}
+                key={value}
+              />
+            );
+          })}
+        </RadioGroup>
+      </FormControl>
+    </Box>
   );
-};
-
-export default RadioInput;
+}

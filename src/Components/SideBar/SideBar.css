@@ -8,40 +8,8 @@
 
 .control-panel {
   height: 100vh;
-  background-color: #f8f8f8;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
-}
-
-/* pyramid input */
-
-.layer-count {
-  margin: 0 auto;
-  text-align: center;
-  display: block;
-}
-
-.layer-1 {
-  width: 15%;
-}
-
-.layer-2 {
-  width: 25%;
-}
-
-.layer-3 {
-  width: 40%;
-}
-
-.layer-4 {
-  width: 60%;
-}
-
-.layer-5 {
-  width: 75%;
-}
-
-.layer-6 {
-  width: 90%;
+  margin-left: 20px;
+  margin-top: 30px;
 }
