@@ -1,27 +1,32 @@
-import React from "react";
-import "./DropDown.css";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-const DropDown = ({ items, val, lab, clickEvt }) => {
+export default function BasicSelect({ handleChange, lab, val, items }) {
   return (
-    <div className="form-group">
-      <label className="control-label" htmlFor={lab}>
-        {lab}
-      </label>
-      <select
-        type="text"
-        id={lab}
-        value={val}
-        onBlur={clickEvt}
-        onChange={clickEvt}
-      >
-        {items.map(({ label, value }) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Box sx={{ minWidth: 300, margin: 1 }}>
+      <FormControl fullWidth>
+        <InputLabel id={lab}>{lab}</InputLabel>
+        <Select
+          labelId={lab}
+          id={`${lab}_label`}
+          defaultValue={val}
+          value={val}
+          label={lab}
+          onChange={handleChange}
+        >
+          {items.map((value) => {
+            return (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+    </Box>
   );
-};
-
-export default DropDown;
+}
