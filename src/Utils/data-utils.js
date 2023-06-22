@@ -69,7 +69,6 @@ export const get_layers = (climb, top, n) => {
 
   let topN = grades.indexOf(top);
   let bottomN = grades.indexOf(top) + n;
-  console.log(grades.slice(topN, bottomN));
   return grades.slice(topN, bottomN);
 };
 

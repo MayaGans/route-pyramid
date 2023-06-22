@@ -4,7 +4,6 @@ import "./Pyramid.css";
 
 const Pyramid = ({ pyramid }) => {
   let layers = Object.keys(pyramid);
-  console.log(layers);
   return (
     <div>
       <h1 className="centered">Jordan&apos;s Route Pyramid</h1>

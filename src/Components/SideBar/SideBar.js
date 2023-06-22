@@ -21,15 +21,17 @@ const SideBar = () => {
   const [selectedGrade, setSelectedGrade] = useState("5.13c");
   const [selectedLevel, setSelectedLevel] = useState(6);
   const [gradeList, setGradeList] = useState(ROUTE_GRADES);
-  // const [angle, setAngle] = useState(ANGLE);
-  // const [style, setStyle] = useState(STYLE);
+  const [angle, setAngle] = useState(ANGLE);
+  const [style, setStyle] = useState(STYLE);
   const [data, setData] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [pyramid, setPyramid] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const raw_dat = await readData();
+        setAllData(raw_dat.data);
         setData(raw_dat.data);
       } catch (err) {
         setData([]);
@@ -58,6 +60,23 @@ const SideBar = () => {
 
   function changeClimbStyle(e) {
     setClimb(e.target.value);
+  }
+
+  function changeAngle(e) {
+    setAngle(e);
+  }
+
+  useEffect(() => {
+    console.log(angle);
+    setData(
+      allData
+        .filter((x) => angle.includes(x.angle))
+        .filter((x) => style.includes(x.style))
+    );
+  }, [angle, style]);
+
+  function changeStyle(e) {
+    setStyle(e);
   }
 
   useEffect(() => {
@@ -92,8 +111,16 @@ const SideBar = () => {
           max={20}
           clickEvt={changeLevels}
         />
-        <MultipleSelectChip names={STYLE} lab={"Style"} />
-        <MultipleSelectChip names={ANGLE} lab={"Angle"} />
+        <MultipleSelectChip
+          names={STYLE}
+          lab={"Style"}
+          setChange={changeStyle}
+        />
+        <MultipleSelectChip
+          names={ANGLE}
+          lab={"Angle"}
+          setChange={changeAngle}
+        />
       </div>
 
       <Pyramid pyramid={pyramid} />

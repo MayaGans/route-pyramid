@@ -28,7 +28,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChip({ names, lab }) {
+export default function MultipleSelectChip({ names, lab, setChange }) {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState(names);
 
@@ -40,6 +40,7 @@ export default function MultipleSelectChip({ names, lab }) {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setChange(personName);
   };
 
   return (
