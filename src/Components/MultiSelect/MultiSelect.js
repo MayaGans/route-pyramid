@@ -28,7 +28,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChip({ names, lab, setChange }) {
+export default function MultipleSelectChip({ names, lab, setChange, color }) {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState(names);
 
@@ -58,9 +58,18 @@ export default function MultipleSelectChip({ names, lab, setChange }) {
           input={<OutlinedInput id="select-multiple-chip" label={lab} />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
+              {color
+                ? selected.map((value, i) => (
+                    <Chip
+                      key={value}
+                      label={value}
+                      style={{
+                        backgroundColor: color[i],
+                        borderColor: "black",
+                      }}
+                    />
+                  ))
+                : selected.map((value) => <Chip key={value} label={value} />)}
             </Box>
           )}
           MenuProps={MenuProps}

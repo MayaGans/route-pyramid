@@ -7,11 +7,6 @@ const Pyramid = ({ pyramid }) => {
   return (
     <div>
       <h1 className="centered">Jordan&apos;s Route Pyramid</h1>
-      <div className="legend">
-        <div className="legend-item y2021">2021</div>
-        <div className="legend-item y2022">2022</div>
-        <div className="legend-item y2023">2023</div>
-      </div>
       <div className="pyramid">
         {layers.map((x, i) => (
           <Layer

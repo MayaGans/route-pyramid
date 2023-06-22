@@ -1,7 +1,7 @@
 /* put css from index.css here */
 
 h1.centered {
-  margin: 10px 0 0 0px;
+  margin: 10px 0 0 85px;
   padding-bottom: 0;
 }
 
@@ -11,7 +11,8 @@ h1.centered {
 }
 
 .pyramid {
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .legend {

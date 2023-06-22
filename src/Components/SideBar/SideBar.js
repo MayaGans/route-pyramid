@@ -66,13 +66,17 @@ const SideBar = () => {
     setAngle(e);
   }
 
+  function changeYear() {
+    console.log("test");
+  }
+
   useEffect(() => {
     console.log(angle);
     setData(
       allData
         .filter((x) => angle.includes(x.angle))
         .filter((x) => style.includes(x.style))
-    );
+    ); // eslint-disable-next-line
   }, [angle, style]);
 
   function changeStyle(e) {
@@ -109,6 +113,7 @@ const SideBar = () => {
           step={1}
           min={1}
           max={20}
+          lab={"Pyramid Levels"}
           clickEvt={changeLevels}
         />
         <MultipleSelectChip
@@ -120,6 +125,13 @@ const SideBar = () => {
           names={ANGLE}
           lab={"Angle"}
           setChange={changeAngle}
+        />
+
+        <MultipleSelectChip
+          names={["2020", "2021", "2022", "2023"]}
+          lab={"Year"}
+          setChange={changeYear}
+          color={["#CCF5F6", "#CBE4F9", "#D5CDEA", "#EEF9DA"]}
         />
       </div>
 
