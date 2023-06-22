@@ -17,6 +17,8 @@ import MultipleSelectChip from "../MultiSelect/MultiSelect";
 import DiscreteSlider from "../Slider/Slider";
 
 const SideBar = () => {
+  const allYears = ["2020", "2021", "2022", "2023"];
+
   const [climb, setClimb] = useState("Route");
   const [selectedGrade, setSelectedGrade] = useState("5.13c");
   const [selectedLevel, setSelectedLevel] = useState(6);
@@ -26,6 +28,7 @@ const SideBar = () => {
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [pyramid, setPyramid] = useState([]);
+  const [years, setYears] = useState(allYears);
 
   useEffect(() => {
     async function fetchData() {
@@ -40,11 +43,13 @@ const SideBar = () => {
     fetchData();
   }, []);
 
+  // can we just read from the data base again?
   const appendData = (dat) => {
     setData(data.concat(dat));
   };
 
   useEffect(() => {
+    console.log(data);
     setPyramid(
       make_data(data, get_layers(climb, selectedGrade, selectedLevel))
     );
@@ -66,8 +71,8 @@ const SideBar = () => {
     setAngle(e);
   }
 
-  function changeYear() {
-    console.log("test");
+  function changeYears(e) {
+    setYears(e);
   }
 
   useEffect(() => {
@@ -76,8 +81,9 @@ const SideBar = () => {
       allData
         .filter((x) => angle.includes(x.angle))
         .filter((x) => style.includes(x.style))
+        .filter((x) => years.includes(x.date.substring(0, 4)))
     ); // eslint-disable-next-line
-  }, [angle, style]);
+  }, [angle, style, years]);
 
   function changeStyle(e) {
     setStyle(e);
@@ -130,7 +136,7 @@ const SideBar = () => {
         <MultipleSelectChip
           names={["2020", "2021", "2022", "2023"]}
           lab={"Year"}
-          setChange={changeYear}
+          setChange={changeYears}
           color={["#CCF5F6", "#CBE4F9", "#D5CDEA", "#EEF9DA"]}
         />
       </div>
