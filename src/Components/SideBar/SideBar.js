@@ -76,7 +76,6 @@ const SideBar = () => {
   }
 
   useEffect(() => {
-    console.log(angle);
     setData(
       allData
         .filter((x) => angle.includes(x.angle))

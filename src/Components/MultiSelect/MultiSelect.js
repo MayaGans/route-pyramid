@@ -40,8 +40,11 @@ export default function MultipleSelectChip({ names, lab, setChange, color }) {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    setChange(personName);
   };
+
+  React.useEffect(() => {
+    setChange(personName); // eslint-disable-next-line
+  }, [personName]);
 
   return (
     <div>
