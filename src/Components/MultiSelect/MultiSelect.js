@@ -59,12 +59,12 @@ export default function MultipleSelectChip({ names, lab, setChange, color }) {
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {color
-                ? selected.map((value, i) => (
+                ? selected.map((value) => (
                     <Chip
                       key={value}
                       label={value}
                       style={{
-                        backgroundColor: color[i],
+                        backgroundColor: color[value],
                         borderColor: "black",
                       }}
                     />

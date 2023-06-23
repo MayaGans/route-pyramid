@@ -137,7 +137,12 @@ const SideBar = () => {
           names={["2020", "2021", "2022", "2023"]}
           lab={"Year"}
           setChange={changeYears}
-          color={["#CCF5F6", "#CBE4F9", "#D5CDEA", "#EEF9DA"]}
+          color={{
+            2020: "#CCF5F6",
+            2021: "#CBE4F9",
+            2022: "#D5CDEA",
+            2023: "#EEF9DA",
+          }}
         />
       </div>
 
