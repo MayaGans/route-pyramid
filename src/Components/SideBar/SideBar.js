@@ -102,6 +102,7 @@ const SideBar = () => {
   return (
     <div className="content">
       <div className="control-panel">
+        <h1>Jordan&apos;s Climbing Pyramid</h1>
         <DropDown
           items={["Route", "Boulder"]}
           val={climb}
@@ -132,7 +133,6 @@ const SideBar = () => {
           lab={"Angle"}
           setChange={changeAngle}
         />
-
         <MultipleSelectChip
           names={["2020", "2021", "2022", "2023"]}
           lab={"Year"}
