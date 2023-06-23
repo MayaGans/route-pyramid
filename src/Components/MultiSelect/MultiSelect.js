@@ -40,8 +40,11 @@ export default function MultipleSelectChip({ names, lab, setChange, color }) {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    setChange(personName);
   };
+
+  React.useEffect(() => {
+    setChange(personName); // eslint-disable-next-line
+  }, [personName]);
 
   return (
     <div>
@@ -59,12 +62,12 @@ export default function MultipleSelectChip({ names, lab, setChange, color }) {
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {color
-                ? selected.map((value, i) => (
+                ? selected.map((value) => (
                     <Chip
                       key={value}
                       label={value}
                       style={{
-                        backgroundColor: color[i],
+                        backgroundColor: color[value],
                         borderColor: "black",
                       }}
                     />

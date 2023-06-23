@@ -76,7 +76,6 @@ const SideBar = () => {
   }
 
   useEffect(() => {
-    console.log(angle);
     setData(
       allData
         .filter((x) => angle.includes(x.angle))
@@ -102,6 +101,7 @@ const SideBar = () => {
   return (
     <div className="content">
       <div className="control-panel">
+        <h1>Jordan&apos;s Climbing Pyramid</h1>
         <DropDown
           items={["Route", "Boulder"]}
           val={climb}
@@ -132,12 +132,16 @@ const SideBar = () => {
           lab={"Angle"}
           setChange={changeAngle}
         />
-
         <MultipleSelectChip
           names={["2020", "2021", "2022", "2023"]}
           lab={"Year"}
           setChange={changeYears}
-          color={["#CCF5F6", "#CBE4F9", "#D5CDEA", "#EEF9DA"]}
+          color={{
+            2020: "#CCF5F6",
+            2021: "#CBE4F9",
+            2022: "#D5CDEA",
+            2023: "#EEF9DA",
+          }}
         />
       </div>
 

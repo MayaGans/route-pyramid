@@ -1,5 +1,10 @@
 /* inspo https://codepen.io/andiio/pen/tFECp */
 
+h1 {
+  font-size: 1rem;
+  margin-left: 10px;
+}
+
 .content {
   display: grid;
   grid-template-columns: 300px 1fr;
