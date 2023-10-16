@@ -57,6 +57,7 @@ export const STYLE = [
   "Jugs",
   "Jam",
   "Dyno",
+  "Tufa",
 ];
 
 export const ANGLE = ["Slab", "Vertical", "Overhang", "Roof"];

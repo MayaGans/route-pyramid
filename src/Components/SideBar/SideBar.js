@@ -20,7 +20,7 @@ const SideBar = () => {
   const allYears = ["2020", "2021", "2022", "2023"];
 
   const [climb, setClimb] = useState("Route");
-  const [selectedGrade, setSelectedGrade] = useState("5.13c");
+  const [selectedGrade, setSelectedGrade] = useState("5.13d");
   const [selectedLevel, setSelectedLevel] = useState(6);
   const [gradeList, setGradeList] = useState(ROUTE_GRADES);
   const [angle, setAngle] = useState(ANGLE);

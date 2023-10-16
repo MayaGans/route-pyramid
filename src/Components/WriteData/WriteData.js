@@ -1,13 +1,14 @@
 import { useState } from "react";
-import DropDown from "../DropDown/DropDown";
-import DateSelect from "../DateSelect/DateSelect";
-import TextInput from "../TextInput/TextInput";
 import useGradeList from "../GradePicker/GradePicker";
-import { STYLE, ANGLE } from "../../Utils/data-utils";
-import RadioInput from "../RadioInput/RadioInput";
+import { createClient } from "@supabase/supabase-js";
 
 const WriteData = ({ onClick, onClose }) => {
-  const [climb, setClimb] = useState("Route");
+  const supabase = createClient(
+    "https://erwnauvxilsimrcmgxoq.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyd25hdXZ4aWxzaW1yY21neG9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODczNjAyODEsImV4cCI6MjAwMjkzNjI4MX0.iwMKoZ_oyhROIPmnOXEanANOPgE77_pX7afTvNnFLEQ"
+  );
+
+  const [climb, setClimb] = useState("Route"); // eslint-disable-line
   const [gradeList] = useGradeList(climb);
 
   const [climbName, setClimbName] = useState("");
@@ -27,32 +28,25 @@ const WriteData = ({ onClick, onClose }) => {
     climbAngle,
     climbStyle
   ) {
-    try {
-      await fetch("/.netlify/functions/google-data", {
-        method: "POST",
-        body: JSON.stringify({
-          date: climbDate,
-          name: climbName,
-          ascent_type: climbAscentType,
-          grade: climbGrade,
-          location: null,
-          country: null,
-          attempts: null,
-          angle: climbAngle,
-          style: climbStyle,
-        }),
-      }).then((res) => res.json());
-      /*
-        .then(log)
-        .catch(error);
-        */
-    } catch (err) {
-      console.log(err);
-    }
+    const {
+      data,
+      error, // eslint-disable-line
+    } = await supabase.from("all-data").insert([
+      {
+        date: climbDate,
+        name: climbName,
+        ascent_type: climbAscentType,
+        grade: climbGrade,
+        angle: climbAngle,
+        style: climbStyle,
+      },
+    ]);
+    return data;
   }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
     writeData(
       climbDate,
       climbName,
@@ -66,9 +60,6 @@ const WriteData = ({ onClick, onClose }) => {
       name: climbName,
       ascent_type: climbAscentType,
       grade: climbGrade,
-      location: null,
-      country: null,
-      attempts: null,
       angle: climbAngle,
       style: climbStyle,
     });
@@ -79,79 +70,61 @@ const WriteData = ({ onClick, onClose }) => {
   return (
     <div className="input-data-form">
       <form onSubmit={handleSubmit}>
-        {/*
-        These should really all be their own components I think? 
-        Or is that extra?
-
-        Specifically we use a different version 
-        of the grade dropdown in pyramid which is redundant
-      */}
-
-        <TextInput
-          label="climbName"
-          lab_text="Name"
+        <label htmlFor="climbName">Name</label>
+        <input
+          id="climbName"
           value={climbName}
-          clickEvt={(e) => setClimbName(e.target.value)}
+          type="text"
+          onChange={(e) => setClimbName(e.target.value)}
         />
 
-        <RadioInput
-          items={[
-            { label: "Route", value: "Route" },
-            { label: "Boulder", value: "Boulder" },
-          ]}
-          val={climb}
-          checked={climb}
-          lab="Style"
-          clickEvt={(e) => {
-            setClimb(e.target.value);
-          }}
+        {/* this is redundant */}
+        <label htmlFor="climbGrade">Grade</label>
+        <input
+          id="climbGrade"
+          value={climbGrade}
+          type="text"
+          onChange={(e) => setClimbGrade(e.target.value)}
         />
 
-        <DropDown
-          items={gradeList.map((x) => {
-            return { label: x, value: x };
-          })}
-          val={climbGrade}
-          lab="Top Grade"
-          clickEvt={(e) => setClimbGrade(e.target.value)}
-        />
-
-        <DateSelect
-          label="climbData"
-          lab_text="Date"
+        {/* date picker */}
+        <label htmlFor="climbDate">Date</label>
+        <input
+          id="climbDate"
           value={climbDate}
-          clickEvt={(e) => setClimbDate(e.target.value)}
+          type="text"
+          onChange={(e) => setClimbDate(e.target.value)}
         />
 
-        <DropDown
-          items={[
-            { label: "Redpoint", value: "Redpoint" },
-            { label: "Onsight", value: "Onsight" },
-          ]}
-          val={climbAscentType}
-          lab="Ascent Type"
-          clickEvt={(e) => setClimbAscentType(e.target.value)}
+        {/* Onsight or Redpoint */}
+        <label htmlFor="climbAscentType">Ascent Type</label>
+        <input
+          id="climbAscentType"
+          value={climbAscentType}
+          type="text"
+          onChange={(e) => setClimbAscentType(e.target.value)}
         />
 
-        <DropDown
-          items={["All"].concat(STYLE).map((x) => {
-            return { label: x, value: x };
-          })}
-          val={climbStyle}
-          lab="Style"
-          clickEvt={(e) => setClimbStyle(e.target.value)}
+        {/* Onsight or Redpoint */}
+        <label htmlFor="climbAngle">Angle</label>
+        <input
+          id="climbAscentType"
+          value={climbAngle}
+          type="text"
+          onChange={(e) => setClimbAngle(e.target.value)}
         />
 
-        <DropDown
-          items={["All"].concat(ANGLE).map((x) => {
-            return { label: x, value: x };
-          })}
-          val={climbAngle}
-          lab="Angle"
-          clickEvt={(e) => setClimbAngle(e.target.value)}
+        {/* Onsight or Redpoint */}
+        <label htmlFor="climbStyle">Style</label>
+        <input
+          id="climbAscentType"
+          value={climbStyle}
+          type="text"
+          onChange={(e) => setClimbStyle(e.target.value)}
         />
 
         {/* you can only submit if all sections are filled */}
+
         <input type="submit" value="Submit" />
       </form>
     </div>
