@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 
 export default function BasicSelect({ handleChange, lab, val, items }) {
   return (
-    <Box sx={{ minWidth: 300, margin: 1 }}>
+    <Box sx={{ minWidth: "100%", margin: 1 }}>
       <FormControl fullWidth>
         <InputLabel id={lab}>{lab}</InputLabel>
         <Select

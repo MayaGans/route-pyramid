@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { TextField } from "@mui/material";
 import DropDown from "../DropDown/DropDown";
-import { DateField } from "@mui/x-date-pickers/DateField";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Box from "@mui/material/Box";
@@ -104,7 +104,7 @@ const WriteData = ({ onClick, onClose }) => {
         <Box sx={{ minWidth: 300, margin: 1 }}>
           <FormControl fullWidth>
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
-              <DateField
+              <DatePicker
                 label="Date"
                 defaultValue={climbDate}
                 onChange={(newValue) => {

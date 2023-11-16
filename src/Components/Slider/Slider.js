@@ -34,7 +34,7 @@ export default function DiscreteSlider({
   lab,
 }) {
   return (
-    <Box sx={{ minWidth: 300, marginLeft: 1 }}>
+    <Box sx={{ minWidth: "100%", marginLeft: 1 }}>
       <InputLabel label={lab} id="demo-multiple-chip-label">
         {lab}
       </InputLabel>

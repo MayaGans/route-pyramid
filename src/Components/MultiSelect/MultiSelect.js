@@ -54,7 +54,7 @@ export default function MultipleSelectChip({
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: "100%" }}>
         <InputLabel label={lab} id="demo-multiple-chip-label">
           {lab}
         </InputLabel>
@@ -75,10 +75,19 @@ export default function MultipleSelectChip({
                       style={{
                         backgroundColor: color[value],
                         borderColor: "black",
+                        fontSize: "0.5rem",
                       }}
                     />
                   ))
-                : selected.map((value) => <Chip key={value} label={value} />)}
+                : selected.map((value) => (
+                    <Chip
+                      key={value}
+                      style={{
+                        fontSize: "0.5rem",
+                      }}
+                      label={value}
+                    />
+                  ))}
             </Box>
           )}
           MenuProps={MenuProps}
