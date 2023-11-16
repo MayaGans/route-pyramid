@@ -1,6 +1,19 @@
 import { useState } from "react";
-import useGradeList from "../GradePicker/GradePicker";
 import { createClient } from "@supabase/supabase-js";
+import { TextField } from "@mui/material";
+import DropDown from "../DropDown/DropDown";
+import { DateField } from "@mui/x-date-pickers/DateField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+
+import {
+  BOULDER_GRADES,
+  ROUTE_GRADES,
+  STYLE,
+  ANGLE,
+} from "../../Utils/data-utils";
 
 const WriteData = ({ onClick, onClose }) => {
   const supabase = createClient(
@@ -8,17 +21,17 @@ const WriteData = ({ onClick, onClose }) => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyd25hdXZ4aWxzaW1yY21neG9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODczNjAyODEsImV4cCI6MjAwMjkzNjI4MX0.iwMKoZ_oyhROIPmnOXEanANOPgE77_pX7afTvNnFLEQ"
   );
 
-  const [climb, setClimb] = useState("Route"); // eslint-disable-line
-  const [gradeList] = useGradeList(climb);
+  let current_date = () => {
+    let yourDate = new Date();
+    yourDate.toISOString().split("T")[0];
+  };
 
   const [climbName, setClimbName] = useState("");
-  const [climbGrade, setClimbGrade] = useState(gradeList[0]);
-  const [climbDate, setClimbDate] = useState(
-    new Date().toISOString().substring(0, 10)
-  );
-  const [climbAscentType, setClimbAscentType] = useState("Repoint");
-  const [climbAngle, setClimbAngle] = useState("All");
-  const [climbStyle, setClimbStyle] = useState("All");
+  const [climbGrade, setClimbGrade] = useState("");
+  const [climbDate, setClimbDate] = useState(current_date());
+  const [climbAscentType, setClimbAscentType] = useState("");
+  const [climbAngle, setClimbAngle] = useState("");
+  const [climbStyle, setClimbStyle] = useState("");
 
   async function writeData(
     climbDate,
@@ -41,11 +54,22 @@ const WriteData = ({ onClick, onClose }) => {
         style: climbStyle,
       },
     ]);
+
+    console.log(error);
     return data;
   }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    console.log("submitted!");
+
+    console.log("Date: " + new Date(climbDate));
+    console.log("Name: " + climbName);
+    console.log("Ascent: " + climbAscentType);
+    console.log("Grade: " + climbGrade);
+    console.log("Angle: " + climbAngle);
+    console.log("Style: " + climbStyle);
 
     writeData(
       climbDate,
@@ -55,14 +79,17 @@ const WriteData = ({ onClick, onClose }) => {
       climbAngle,
       climbStyle
     );
+
+    // should probably replace this with another call to read data...
     onClick({
-      date: climbDate,
+      date: new Date(climbDate).toISOString().split("T")[0],
       name: climbName,
       ascent_type: climbAscentType,
       grade: climbGrade,
       angle: climbAngle,
       style: climbStyle,
     });
+
     // this can only be done if all the fields have first been validated
     onClose();
   };
@@ -70,60 +97,64 @@ const WriteData = ({ onClick, onClose }) => {
   return (
     <div className="input-data-form">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="climbName">Name</label>
-        <input
-          id="climbName"
-          value={climbName}
-          type="text"
-          onChange={(e) => setClimbName(e.target.value)}
-        />
+        <Box sx={{ minWidth: 300, margin: 1 }}>
+          <FormControl fullWidth>
+            <TextField
+              id="climbName"
+              label="Climb Name"
+              value={climbName}
+              onChange={function (e) {
+                setClimbName(e.target.value);
+              }}
+            />
+          </FormControl>
+        </Box>
 
-        {/* this is redundant */}
-        <label htmlFor="climbGrade">Grade</label>
-        <input
+        <Box sx={{ minWidth: 300, margin: 1 }}>
+          <FormControl fullWidth>
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
+              <DateField
+                label="Date"
+                defaultValue={climbDate}
+                onChange={(newValue) => {
+                  setClimbDate(newValue);
+                }}
+              />
+            </LocalizationProvider>
+          </FormControl>
+        </Box>
+
+        <DropDown
           id="climbGrade"
-          value={climbGrade}
-          type="text"
-          onChange={(e) => setClimbGrade(e.target.value)}
+          items={[...ROUTE_GRADES, ...BOULDER_GRADES]}
+          val={climbGrade}
+          lab="Grade"
+          handleChange={(e) => setClimbGrade(e.target.value)}
         />
 
-        {/* date picker */}
-        <label htmlFor="climbDate">Date</label>
-        <input
-          id="climbDate"
-          value={climbDate}
-          type="text"
-          onChange={(e) => setClimbDate(e.target.value)}
-        />
-
-        {/* Onsight or Redpoint */}
-        <label htmlFor="climbAscentType">Ascent Type</label>
-        <input
+        <DropDown
           id="climbAscentType"
-          value={climbAscentType}
-          type="text"
-          onChange={(e) => setClimbAscentType(e.target.value)}
+          items={["Onsight", "Redpoint"]}
+          lab="Ascent"
+          val={climbAscentType}
+          handleChange={(e) => setClimbAscentType(e.target.value)}
         />
 
-        {/* Onsight or Redpoint */}
-        <label htmlFor="climbAngle">Angle</label>
-        <input
-          id="climbAscentType"
-          value={climbAngle}
-          type="text"
-          onChange={(e) => setClimbAngle(e.target.value)}
+        <DropDown
+          id="climbAngle"
+          items={ANGLE}
+          lab="Angle"
+          val={climbAngle}
+          handleChange={(e) => setClimbAngle(e.target.value)}
         />
 
-        {/* Onsight or Redpoint */}
-        <label htmlFor="climbStyle">Style</label>
-        <input
-          id="climbAscentType"
-          value={climbStyle}
-          type="text"
-          onChange={(e) => setClimbStyle(e.target.value)}
+        <DropDown
+          id="climbStyle"
+          items={STYLE}
+          lab="Style"
+          val={climbStyle}
+          handleChange={(e) => setClimbStyle(e.target.value)}
         />
-
-        {/* you can only submit if all sections are filled */}
 
         <input type="submit" value="Submit" />
       </form>

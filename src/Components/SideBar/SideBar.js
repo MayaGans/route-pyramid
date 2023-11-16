@@ -28,7 +28,7 @@ const SideBar = () => {
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [pyramid, setPyramid] = useState([]);
-  const [years, setYears] = useState(allYears);
+  const [years, setYears] = useState(new Date().getFullYear() + "");
 
   useEffect(() => {
     async function fetchData() {
@@ -49,7 +49,6 @@ const SideBar = () => {
   };
 
   useEffect(() => {
-    console.log(data);
     setPyramid(
       make_data(data, get_layers(climb, selectedGrade, selectedLevel))
     );
@@ -94,7 +93,7 @@ const SideBar = () => {
       setSelectedGrade("v9");
     } else {
       setGradeList(ROUTE_GRADES);
-      setSelectedGrade("5.13c");
+      setSelectedGrade("5.13d");
     }
   }, [climb]);
 
@@ -133,7 +132,7 @@ const SideBar = () => {
           setChange={changeAngle}
         />
         <MultipleSelectChip
-          names={["2020", "2021", "2022", "2023"]}
+          names={allYears}
           lab={"Year"}
           setChange={changeYears}
           color={{
@@ -142,6 +141,8 @@ const SideBar = () => {
             2022: "#D5CDEA",
             2023: "#EEF9DA",
           }}
+          displayEmpty
+          value={years}
         />
       </div>
 

@@ -15,7 +15,7 @@ const Block = ({ name, date, ascent_type }) => {
   return (
     <div className={`block ${ascent_type} y${String(date).substring(0, 4)}`}>
       <strong>
-        {name && (name.length > 20 ? name.substring(0, 20) + "..." : name)}
+        {name && (name.length > 23 ? name.substring(0, 23) + "..." : name)}
       </strong>
       <span className="block-date">{date}</span>
       <div className="icon-container">{getIcon(ascent_type)}</div>
