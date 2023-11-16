@@ -46,6 +46,7 @@ const SideBar = () => {
       }
     }
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   // can we just read from the data base again?
