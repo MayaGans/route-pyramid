@@ -91,6 +91,7 @@ const SideBar = () => {
 
   function changeStyle(e) {
     setStyle(e);
+    // test
   }
 
   useEffect(() => {
