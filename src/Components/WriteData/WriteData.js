@@ -62,15 +62,6 @@ const WriteData = ({ onClick, onClose }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    console.log("submitted!");
-
-    console.log("Date: " + new Date(climbDate));
-    console.log("Name: " + climbName);
-    console.log("Ascent: " + climbAscentType);
-    console.log("Grade: " + climbGrade);
-    console.log("Angle: " + climbAngle);
-    console.log("Style: " + climbStyle);
-
     writeData(
       climbDate,
       climbName,

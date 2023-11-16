@@ -35,7 +35,12 @@ const SideBar = () => {
       try {
         const raw_dat = await readData();
         setAllData(raw_dat.data);
-        setData(raw_dat.data);
+        setData(
+          raw_dat.data
+            .filter((x) => angle.includes(x.angle))
+            .filter((x) => style.includes(x.style))
+            .filter((x) => years.includes(x.date.substring(0, 4)))
+        );
       } catch (err) {
         setData([]);
       }
@@ -75,6 +80,7 @@ const SideBar = () => {
   }
 
   useEffect(() => {
+    console.log("data set");
     setData(
       allData
         .filter((x) => angle.includes(x.angle))
@@ -125,11 +131,13 @@ const SideBar = () => {
           names={STYLE}
           lab={"Style"}
           setChange={changeStyle}
+          defaultNames={STYLE}
         />
         <MultipleSelectChip
           names={ANGLE}
           lab={"Angle"}
           setChange={changeAngle}
+          defaultNames={ANGLE}
         />
         <MultipleSelectChip
           names={allYears}
@@ -141,8 +149,7 @@ const SideBar = () => {
             2022: "#D5CDEA",
             2023: "#EEF9DA",
           }}
-          displayEmpty
-          value={years}
+          defaultNames={[years]}
         />
       </div>
 
