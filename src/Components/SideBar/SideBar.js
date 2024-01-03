@@ -17,7 +17,7 @@ import MultipleSelectChip from "../MultiSelect/MultiSelect";
 import DiscreteSlider from "../Slider/Slider";
 
 const SideBar = () => {
-  const allYears = ["2020", "2021", "2022", "2023"];
+  const allYears = ["2020", "2021", "2022", "2023", "2024"];
 
   const [climb, setClimb] = useState("Route");
   const [selectedGrade, setSelectedGrade] = useState("5.13d");
@@ -150,6 +150,7 @@ const SideBar = () => {
             2021: "#CBE4F9",
             2022: "#D5CDEA",
             2023: "#EEF9DA",
+            2024: "#ffebef"
           }}
           defaultNames={[years]}
         />
